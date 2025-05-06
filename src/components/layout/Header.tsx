@@ -65,6 +65,62 @@ export function Header() {
     }
   };
 
+  const renderNavLink = (item: typeof navItems[0]) => {
+    if (item.href.startsWith('#')) {
+      return (
+        <a
+          href={item.href}
+          className="nav-link font-medium text-sm"
+          onClick={(e) => handleSectionNavigation(e, item.href)}
+          onMouseEnter={() => item.megaMenu && setMegaMenuOpen(item.label)}
+          onMouseLeave={() => setMegaMenuOpen(null)}
+        >
+          <span className="flex items-center">
+            {item.label} 
+            {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4" />}
+          </span>
+        </a>
+      );
+    } else {
+      return (
+        <Link
+          to={item.href}
+          className="nav-link font-medium text-sm"
+          onMouseEnter={() => item.megaMenu && setMegaMenuOpen(item.label)}
+          onMouseLeave={() => setMegaMenuOpen(null)}
+        >
+          <span className="flex items-center">
+            {item.label} 
+            {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4" />}
+          </span>
+        </Link>
+      );
+    }
+  };
+
+  const renderMobileNavLink = (item: typeof navItems[0]) => {
+    if (item.href.startsWith('#')) {
+      return (
+        <a
+          href={item.href}
+          className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal"
+          onClick={(e) => handleSectionNavigation(e, item.href)}
+        >
+          {item.label}
+        </a>
+      );
+    } else {
+      return (
+        <Link
+          to={item.href}
+          className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal"
+        >
+          {item.label}
+        </Link>
+      );
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -84,18 +140,7 @@ export function Header() {
         <nav className="hidden md:flex items-center space-x-6">
           {navItems.map((item) => (
             <div key={item.label} className="relative group">
-              <Link
-                to={item.href}
-                className="nav-link font-medium text-sm"
-                onClick={(e) => handleSectionNavigation(e, item.href)}
-                onMouseEnter={() => item.megaMenu && setMegaMenuOpen(item.label)}
-                onMouseLeave={() => setMegaMenuOpen(null)}
-              >
-                <span className="flex items-center">
-                  {item.label} 
-                  {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4" />}
-                </span>
-              </Link>
+              {renderNavLink(item)}
               
               {/* Mega Menu */}
               {item.megaMenu && megaMenuOpen === item.label && (
@@ -145,13 +190,7 @@ export function Header() {
           <div className="py-4 enterprise-container">
             {navItems.map((item) => (
               <div key={item.label}>
-                <Link
-                  to={item.href}
-                  className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal"
-                  onClick={(e) => handleSectionNavigation(e, item.href)}
-                >
-                  {item.label}
-                </Link>
+                {renderMobileNavLink(item)}
               </div>
             ))}
             <div className="mt-4 px-4">

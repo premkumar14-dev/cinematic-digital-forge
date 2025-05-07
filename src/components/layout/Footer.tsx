@@ -14,7 +14,7 @@ export function Footer() {
           <div>
             <Link to="/" className="inline-block mb-6">
               <h2 className="text-2xl font-bold">
-                GORANTLA<span className="text-enterprise-teal">.</span>
+                GORANTLA INFOTECH<span className="text-enterprise-teal">.</span>
               </h2>
             </Link>
             <p className="text-white/80 mb-4">
@@ -60,24 +60,29 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <a href="#services" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                <Link to="/services" className="text-white/80 hover:text-enterprise-teal transition-colors">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#solutions" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                <Link to="/solutions" className="text-white/80 hover:text-enterprise-teal transition-colors">
                   Solutions
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#about" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                <Link to="/about" className="text-white/80 hover:text-enterprise-teal transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#careers" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                <Link to="/careers" className="text-white/80 hover:text-enterprise-teal transition-colors">
                   Careers
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  Contact
+                </Link>
               </li>
             </ul>
           </div>
@@ -87,29 +92,34 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Services</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                <Link to="/services/erp" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  ERP
+                </Link>
+              </li>
+              <li>
+                <Link to="/services/software" className="text-white/80 hover:text-enterprise-teal transition-colors">
                   Software Development
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-enterprise-teal transition-colors">
-                  Cloud Engineering
-                </a>
+                <Link to="/services/cloud" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  Amazon Cloud Services
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-enterprise-teal transition-colors">
-                  Digital Transformation
-                </a>
+                <Link to="/services/qa" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  QA & Testing Services
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-enterprise-teal transition-colors">
-                  Consulting Services
-                </a>
+                <Link to="/services/project" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  Project Management
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-white/80 hover:text-enterprise-teal transition-colors">
-                  IT Strategy
-                </a>
+                <Link to="/services/offshore" className="text-white/80 hover:text-enterprise-teal transition-colors">
+                  Offshore Software Development
+                </Link>
               </li>
             </ul>
           </div>
@@ -121,21 +131,23 @@ export function Footer() {
               <li className="flex">
                 <MapPin className="h-5 w-5 text-enterprise-teal mr-3 flex-shrink-0" />
                 <span className="text-white/80">
-                  123 Tech Park, Suite 100<br />
-                  Hyderabad, Telangana 500081<br />
+                  3rd Floor Sri Durga Sai Hub, 301,<br />
+                  13th phase rd, opposite prajay megapolis,<br />
+                  kukatpally housing board colony<br />
+                  Hyderabad, Telangana 500072<br />
                   India
                 </span>
               </li>
               <li className="flex">
                 <Phone className="h-5 w-5 text-enterprise-teal mr-3 flex-shrink-0" />
-                <a href="tel:+918000000000" className="text-white/80 hover:text-white transition-colors">
-                  +91 800-000-0000
+                <a href="tel:+918939444844" className="text-white/80 hover:text-white transition-colors">
+                  +91 89394 44844 (India)
                 </a>
               </li>
               <li className="flex">
                 <Mail className="h-5 w-5 text-enterprise-teal mr-3 flex-shrink-0" />
-                <a href="mailto:contact@gorantla.tech" className="text-white/80 hover:text-white transition-colors">
-                  contact@gorantla.tech
+                <a href="mailto:info@gorantlainfotech.com" className="text-white/80 hover:text-white transition-colors">
+                  info@gorantlainfotech.com
                 </a>
               </li>
             </ul>

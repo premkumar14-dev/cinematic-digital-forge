@@ -11,6 +11,7 @@ import About from "./pages/About";
 import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
+import ERPService from "./pages/services/ERPService";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/services/:serviceType" element={<Services />} />
+          <Route path="/services/erp" element={<ERPService />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/solutions/:solutionType" element={<Solutions />} />
           <Route path="/about" element={<About />} />

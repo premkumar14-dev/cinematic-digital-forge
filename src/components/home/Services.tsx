@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { useInView } from "react-intersection-observer";
-import { Code, Cloud, BarChart, Cpu } from "lucide-react";
+import { Code, Cloud, FileText, CheckCircle, Server, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -28,30 +28,31 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ icon: Icon, title, descriptio
       )}
     >
       <GlassCard 
-        hoverEffect
-        className="h-full relative overflow-hidden z-10 border border-transparent group-hover:border-enterprise-teal/20 transition-all duration-300"
+        className="h-full relative overflow-hidden border border-gray-100 hover:border-enterprise-teal/30 transition-all duration-300 p-8"
       >
-        {/* Background gradient that appears on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-enterprise-teal/5 to-enterprise-blue/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Accent corner */}
+        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-enterprise-teal/10 to-transparent transform translate-x-10 -translate-y-10 group-hover:translate-x-8 group-hover:-translate-y-8 transition-transform duration-500"></div>
         
-        {/* Icon with enhanced hover effect */}
-        <div className="relative z-10">
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-enterprise-teal/10 to-enterprise-blue/10 flex items-center justify-center text-enterprise-teal mb-6 group-hover:scale-110 transition-transform duration-300 relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-enterprise-teal/20 to-enterprise-blue/20 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300" />
-            <Icon className="h-8 w-8 relative z-10 group-hover:text-enterprise-blue transition-colors duration-300" />
+        {/* Accent bottom */}
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-blue/40 to-enterprise-teal/40 transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-500"></div>
+        
+        {/* Modern icon container */}
+        <div className="relative mb-6">
+          <div className="w-14 h-14 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg shadow-md flex items-center justify-center group-hover:-translate-y-1 transition-all duration-300">
+            <Icon className="h-6 w-6 text-enterprise-teal group-hover:text-enterprise-blue transition-colors duration-300" />
           </div>
+          <div className="absolute top-0 right-0 w-5 h-5 bg-enterprise-teal/10 rounded-full transform translate-x-2 -translate-y-2 group-hover:scale-150 group-hover:bg-enterprise-teal/20 transition-all duration-500"></div>
         </div>
         
-        {/* Content with enhanced hover effects */}
+        {/* Content */}
         <h3 className="text-xl font-semibold mb-3 text-enterprise-blue group-hover:text-enterprise-teal transition-colors duration-300">{title}</h3>
-        <p className="text-gray-600 mb-6 line-clamp-3">{description}</p>
+        <p className="text-gray-600 mb-6">{description}</p>
         
-        <Link to={`/services/${id}`} className="mt-auto inline-block">
-          <Button variant="link" className="p-0 text-enterprise-teal group-hover:text-enterprise-blue transition-colors duration-300 relative">
-            Learn more
-            <span className="ml-2 transition-transform group-hover:translate-x-1 inline-block">→</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-enterprise-teal/50 group-hover:w-full transition-all duration-300"></span>
-          </Button>
+        <Link to={`/services/${id}`} className="inline-flex items-center text-enterprise-teal group-hover:text-enterprise-blue transition-colors duration-300">
+          <span className="mr-1">Learn more</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:translate-x-1 transition-transform duration-300">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
         </Link>
       </GlassCard>
     </div>
@@ -66,6 +67,12 @@ export function Services() {
 
   const servicesData = [
     {
+      id: "erp",
+      icon: FileText,
+      title: "ERP",
+      description: "Streamline operations with our comprehensive Enterprise Resource Planning solutions tailored to your business needs."
+    },
+    {
       id: "software",
       icon: Code,
       title: "Software Development",
@@ -74,48 +81,60 @@ export function Services() {
     {
       id: "cloud",
       icon: Cloud,
-      title: "Cloud Engineering",
-      description: "Accelerate digital transformation with our comprehensive cloud solutions, migration services, and optimization strategies."
+      title: "Amazon Cloud Services",
+      description: "Leverage the power of AWS with our cloud engineering expertise, from migration to optimization and management."
     },
     {
-      id: "digital",
-      icon: BarChart,
-      title: "Digital Transformation",
-      description: "Reimagine your business processes with digital solutions that drive efficiency, innovation, and competitive advantage."
+      id: "qa",
+      icon: CheckCircle,
+      title: "QA & Testing Services",
+      description: "Comprehensive quality assurance and testing services to ensure your software meets the highest standards."
     },
     {
-      id: "consulting",
-      icon: Cpu,
-      title: "IT Consulting",
-      description: "Strategic technology consulting with industry expertise to align your IT investments with business objectives."
+      id: "project",
+      icon: Users,
+      title: "Project Management",
+      description: "Professional project planning, execution and monitoring to ensure timely delivery of your technology initiatives."
+    },
+    {
+      id: "offshore",
+      icon: Server,
+      title: "Offshore Development",
+      description: "Access top global talent and reduce costs with our dedicated offshore development team solutions."
     }
   ];
 
   return (
     <section id="services" className="py-24 relative overflow-hidden">
-      {/* Enhanced background with gradient and pattern */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50/30 z-0" />
-      <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085')] bg-cover bg-center opacity-[0.02] mix-blend-overlay" />
+      {/* Modern layered background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white to-blue-50/30 z-0"></div>
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-20 right-10 w-60 h-60 rounded-full bg-enterprise-blue/5 blur-3xl"></div>
+        <div className="absolute bottom-20 left-10 w-80 h-80 rounded-full bg-enterprise-teal/5 blur-3xl"></div>
+      </div>
       
       <div className="enterprise-container relative z-10">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          {/* Enhanced section title with decorative elements */}
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-10 h-0.5 bg-enterprise-teal/30 rounded"></div>
-            <h2 className="text-3xl md:text-4xl font-bold mx-4 text-enterprise-blue relative">
+          {/* Modern section title with accents */}
+          <div className="inline-block mb-4">
+            <div className="flex items-center justify-center mb-2">
+              <span className="h-[1px] w-6 bg-enterprise-teal"></span>
+              <span className="mx-2 text-sm text-enterprise-teal font-medium uppercase tracking-wider">What we offer</span>
+              <span className="h-[1px] w-6 bg-enterprise-teal"></span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-enterprise-blue relative inline-block">
               Our Services
-              <span className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-enterprise-teal rounded"></span>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-enterprise-blue to-enterprise-teal rounded-full"></div>
             </h2>
-            <div className="w-10 h-0.5 bg-enterprise-teal/30 rounded"></div>
           </div>
           
-          <p className="text-gray-600">
-            End-to-end technology solutions designed to transform your business
-            and drive sustainable growth in today's digital landscape.
+          <p className="text-gray-600 mt-6 max-w-xl mx-auto">
+            Comprehensive technology solutions designed to transform your business
+            and drive sustainable growth in today's competitive landscape.
           </p>
         </div>
         
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
             <ServiceCard
               key={service.title}
@@ -132,8 +151,10 @@ export function Services() {
         {/* View all services button */}
         <div className="flex justify-center mt-12">
           <Link to="/services">
-            <Button className="bg-white hover:bg-enterprise-blue hover:text-white text-enterprise-blue border border-enterprise-blue/30 transition-all duration-300 px-8">
-              View All Services
+            <Button className="group relative overflow-hidden bg-white text-enterprise-blue border border-enterprise-blue/30 hover:border-enterprise-blue transition-all duration-300 px-8">
+              <span className="relative z-10">View All Services</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-enterprise-teal to-enterprise-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-enterprise-teal transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300"></span>
             </Button>
           </Link>
         </div>

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
@@ -12,10 +12,12 @@ const navItems = [
     href: "/services",
     megaMenu: true,
     subItems: [
+      { label: "ERP", href: "/services/erp" },
       { label: "Software Development", href: "/services/software" },
-      { label: "Cloud Engineering", href: "/services/cloud" },
-      { label: "Digital Transformation", href: "/services/digital" },
-      { label: "Consulting", href: "/services/consulting" },
+      { label: "Amazon Cloud Services", href: "/services/cloud" },
+      { label: "QA & Testing Services", href: "/services/qa" },
+      { label: "Project Management", href: "/services/project" },
+      { label: "Offshore Software Development", href: "/services/offshore" }
     ]
   },
   { 
@@ -38,7 +40,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
-  const [megaMenuTimeout, setMegaMenuTimeout] = useState<NodeJS.Timeout | null>(null);
+  const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const menuOpenRef = useRef<boolean>(false);
 
   // Handle scroll
   useEffect(() => {
@@ -53,31 +56,54 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  // Handle menu mouse enter with delay clear
-  const handleMenuMouseEnter = (label: string) => {
-    if (megaMenuTimeout) {
-      clearTimeout(megaMenuTimeout);
-      setMegaMenuTimeout(null);
+  const clearMenuTimeout = () => {
+    if (menuTimeoutRef.current) {
+      clearTimeout(menuTimeoutRef.current);
+      menuTimeoutRef.current = null;
     }
+  };
+
+  // Handle menu mouse enter
+  const handleMenuMouseEnter = (label: string) => {
+    clearMenuTimeout();
+    menuOpenRef.current = true;
     setMegaMenuOpen(label);
   };
 
   // Handle menu mouse leave with delay
   const handleMenuMouseLeave = () => {
-    const timeout = setTimeout(() => {
-      setMegaMenuOpen(null);
-    }, 100); // Small delay to prevent menu flickering
-    setMegaMenuTimeout(timeout);
+    menuOpenRef.current = false;
+    
+    // Add a small delay to allow moving to submenu
+    menuTimeoutRef.current = setTimeout(() => {
+      if (!menuOpenRef.current) {
+        setMegaMenuOpen(null);
+      }
+    }, 300);
+  };
+
+  // Handle submenu mouse enter
+  const handleSubmenuMouseEnter = () => {
+    clearMenuTimeout();
+    menuOpenRef.current = true;
+  };
+
+  // Handle submenu mouse leave
+  const handleSubmenuMouseLeave = () => {
+    menuOpenRef.current = false;
+    menuTimeoutRef.current = setTimeout(() => {
+      if (!menuOpenRef.current) {
+        setMegaMenuOpen(null);
+      }
+    }, 300);
   };
 
   // Clear timeout on unmount
   useEffect(() => {
     return () => {
-      if (megaMenuTimeout) {
-        clearTimeout(megaMenuTimeout);
-      }
+      clearMenuTimeout();
     };
-  }, [megaMenuTimeout]);
+  }, []);
 
   const renderNavLink = (item: typeof navItems[0]) => {
     return (
@@ -118,22 +144,32 @@ export function Header() {
       <div className="enterprise-container flex justify-between items-center">
         {/* Enhanced Logo */}
         <Link to="/" className="flex items-center group">
-          <div className="relative h-10 w-10 bg-gradient-to-br from-enterprise-blue to-enterprise-teal rounded-lg flex items-center justify-center mr-3 overflow-hidden shadow-lg group-hover:shadow-enterprise-teal/30 transition-all duration-300">
-            <div className="absolute inset-0 bg-gradient-to-r from-enterprise-blue to-enterprise-teal opacity-80 group-hover:opacity-100 transition-opacity"></div>
-            <div className="relative z-10 text-white font-bold text-lg">GI</div>
-            {/* Animated elements inside logo */}
-            <div className="absolute top-1 right-1 h-1 w-1 bg-white rounded-full opacity-70 animate-pulse"></div>
-            <div className="absolute bottom-2 left-2 h-1 w-1 bg-white rounded-full opacity-70 animate-[pulse_2.5s_infinite_0.5s]"></div>
-            <div className="absolute inset-0 border border-white/30 rounded-lg group-hover:border-white/50 transition-colors"></div>
+          {/* Logo Container */}
+          <div className="relative h-10 w-10 mr-3 flex-shrink-0">
+            {/* Base shape */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue to-enterprise-teal rounded-lg shadow-lg transform transition-transform duration-300 group-hover:scale-105"></div>
+            
+            {/* Inner shape */}
+            <div className="absolute inset-1 bg-white rounded-[6px] flex items-center justify-center">
+              <div className="text-enterprise-blue font-bold text-lg tracking-tighter">G</div>
+            </div>
+            
+            {/* Decorative dot */}
+            <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-enterprise-teal"></div>
+            
+            {/* Animated accent */}
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-teal to-enterprise-blue transform origin-left transition-transform duration-300 group-hover:scale-x-100 scale-x-0"></div>
           </div>
+          
+          {/* Company Name */}
           <div>
             <div className="flex items-baseline">
               <span className="text-xl font-bold text-enterprise-blue tracking-tight">
-                GORANTLA
+                GORANTLA INFOTECH
               </span>
               <span className="text-enterprise-teal animate-pulse-subtle ml-0.5">.</span>
             </div>
-            <span className="text-sm block text-gray-600 -mt-1 font-medium tracking-wide">INFOTECH SOLUTIONS</span>
+            <span className="text-xs block text-gray-600 -mt-1 font-medium tracking-wide">INNOVATIVE SOLUTIONS</span>
           </div>
         </Link>
 
@@ -147,8 +183,8 @@ export function Header() {
               {item.megaMenu && megaMenuOpen === item.label && (
                 <div 
                   className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 min-w-[280px] glass-effect rounded-xl shadow-xl overflow-hidden animate-fade-in border border-gray-100"
-                  onMouseEnter={() => handleMenuMouseEnter(item.label)}
-                  onMouseLeave={handleMenuMouseLeave}
+                  onMouseEnter={handleSubmenuMouseEnter}
+                  onMouseLeave={handleSubmenuMouseLeave}
                 >
                   <div className="p-3">
                     {item.subItems?.map((subItem) => (

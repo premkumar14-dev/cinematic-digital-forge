@@ -12,6 +12,9 @@ import Careers from "./pages/Careers";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ERPService from "./pages/services/ERPService";
+import QAService from "./pages/services/QAService";
+import ProjectService from "./pages/services/ProjectService";
+import OffshoreService from "./pages/services/OffshoreService";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +29,9 @@ const App = () => (
           <Route path="/services" element={<Services />} />
           <Route path="/services/:serviceType" element={<Services />} />
           <Route path="/services/erp" element={<ERPService />} />
+          <Route path="/services/qa" element={<QAService />} />
+          <Route path="/services/project" element={<ProjectService />} />
+          <Route path="/services/offshore" element={<OffshoreService />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/solutions/:solutionType" element={<Solutions />} />
           <Route path="/about" element={<About />} />

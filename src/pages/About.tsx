@@ -4,7 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { useInView } from "react-intersection-observer";
 import { GlassCard } from "@/components/ui/GlassCard";
-import { Target, Award, TrendingUp, Users, Globe, Trophy } from "lucide-react";
+import { Target, Award, TrendingUp, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -20,21 +20,19 @@ const About = () => {
   });
 
   const milestones = [
-    { year: "2010", title: "Company Founded", description: "GORANTLA INFOTECH established with a vision to transform enterprises through technology." },
-    { year: "2013", title: "International Expansion", description: "Opened our first international office in the United States, expanding our global footprint." },
-    { year: "2015", title: "Industry Recognition", description: "Received our first industry award for excellence in cloud transformation services." },
-    { year: "2018", title: "Strategic Partnerships", description: "Formed strategic alliances with major cloud and technology providers." },
-    { year: "2021", title: "Innovation Center", description: "Launched our Innovation Center focused on emerging technologies and R&D." },
-    { year: "2023", title: "Global Recognition", description: "Recognized as a leader in digital transformation by industry analysts." },
+    { year: "2018", title: "Company Founded", description: "GORANTLA INFOTECH SOLUTIONS established on April 9th with a vision to transform enterprises through technology." },
+    { year: "2019", title: "First Major Client", description: "Secured our first enterprise client and delivered a successful digital transformation project." },
+    { year: "2020", title: "Service Expansion", description: "Expanded our service offerings to include cloud transformation and managed services." },
+    { year: "2021", title: "Strategic Partnerships", description: "Formed strategic alliances with major cloud and technology providers." },
+    { year: "2022", title: "Team Growth", description: "Doubled our team size to meet growing client demand for our services." },
+    { year: "2023", title: "Industry Recognition", description: "Recognized for excellence in digital transformation services." },
   ];
   
   const stats = [
-    { label: "Years in Business", value: "14+" },
-    { label: "Global Clients", value: "250+" },
-    { label: "Team Members", value: "1000+" },
-    { label: "Countries", value: "15+" },
-    { label: "Projects Delivered", value: "1500+" },
-    { label: "Success Rate", value: "98%" },
+    { label: "Years in Business", value: "5+" },
+    { label: "Global Clients", value: "12+" },
+    { label: "Team Members", value: "45+" },
+    { label: "Projects Delivered", value: "23+" },
   ];
   
   const values = [
@@ -49,7 +47,7 @@ const About = () => {
       description: "We constantly push boundaries and embrace emerging technologies." 
     },
     { 
-      icon: Trophy, 
+      icon: Award, 
       title: "Integrity", 
       description: "We uphold the highest standards of honesty, transparency, and ethical conduct." 
     },
@@ -76,7 +74,7 @@ const About = () => {
               <h1 className="text-4xl md:text-5xl font-bold text-enterprise-blue mb-6">About GORANTLA INFOTECH</h1>
               <p className="text-lg text-gray-700 mb-8">
                 We are a global technology solutions provider committed to helping enterprises thrive in the digital era. 
-                With over a decade of experience, we combine technical excellence, industry knowledge, and a client-centric 
+                Founded in 2018, we combine technical excellence, industry knowledge, and a client-centric 
                 approach to deliver transformative solutions.
               </p>
               <div className="flex flex-wrap justify-center gap-4">
@@ -102,9 +100,9 @@ const About = () => {
               <div className="lg:w-1/2">
                 <h2 className="text-3xl font-bold text-enterprise-blue mb-4">Our Story</h2>
                 <p className="text-gray-700 mb-4">
-                  Founded in 2010, GORANTLA INFOTECH SOLUTIONS began with a vision to bridge the gap between technology 
+                  Founded on April 9th, 2018, GORANTLA INFOTECH SOLUTIONS PVT LTD began with a vision to bridge the gap between technology 
                   innovation and business value. What started as a small team of passionate technologists has grown 
-                  into a global enterprise with offices across multiple continents.
+                  into a thriving company with over 45 talented professionals.
                 </p>
                 <p className="text-gray-700 mb-4">
                   Over the years, we've evolved our service offerings to meet the changing needs of the market, 
@@ -168,11 +166,11 @@ const About = () => {
             <div className="text-center max-w-2xl mx-auto mb-12">
               <h2 className="text-3xl font-bold mb-4">By the Numbers</h2>
               <p className="text-white/80">
-                Our growth and impact over the years reflects our commitment to excellence and client success.
+                Our growth and impact since our founding in 2018 reflects our commitment to excellence and client success.
               </p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
               {stats.map((stat, index) => (
                 <div 
                   key={index} 
@@ -191,56 +189,48 @@ const About = () => {
           </div>
         </section>
         
-        {/* Global Presence */}
+        {/* Office Information */}
         <section className="py-16">
           <div className="enterprise-container">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl font-bold text-enterprise-blue mb-4">Global Presence</h2>
+              <h2 className="text-3xl font-bold text-enterprise-blue mb-4">Our Office</h2>
               <p className="text-gray-700">
-                With offices and delivery centers across multiple continents, we bring global expertise with local understanding.
+                Visit us at our headquarters in Hyderabad, India
               </p>
             </div>
             
             <div className="flex flex-col md:flex-row gap-8 items-center">
               <div className="md:w-1/2">
                 <GlassCard className="p-6 h-full">
-                  <div className="flex items-center mb-6">
-                    <Globe className="h-8 w-8 text-enterprise-teal mr-3" />
-                    <h3 className="text-xl font-semibold text-enterprise-blue">Our Global Footprint</h3>
-                  </div>
-                  <ul className="space-y-3">
-                    <li className="flex items-start">
-                      <div className="w-2 h-2 rounded-full bg-enterprise-teal mt-2 mr-3"></div>
-                      <div>
-                        <span className="font-semibold">North America:</span> New York, San Francisco, Toronto
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="w-2 h-2 rounded-full bg-enterprise-teal mt-2 mr-3"></div>
-                      <div>
-                        <span className="font-semibold">Europe:</span> London, Berlin, Amsterdam
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="w-2 h-2 rounded-full bg-enterprise-teal mt-2 mr-3"></div>
-                      <div>
-                        <span className="font-semibold">Asia-Pacific:</span> Hyderabad, Bengaluru, Singapore, Sydney
-                      </div>
-                    </li>
-                    <li className="flex items-start">
-                      <div className="w-2 h-2 rounded-full bg-enterprise-teal mt-2 mr-3"></div>
-                      <div>
-                        <span className="font-semibold">Middle East:</span> Dubai, Abu Dhabi
-                      </div>
-                    </li>
-                  </ul>
+                  <h3 className="text-xl font-semibold text-enterprise-blue mb-6">Headquarters</h3>
+                  <p className="text-gray-700 mb-4">
+                    3rd Floor Sri Durga Sai Hub, 301,<br />
+                    13th phase rd, opposite prajay megapolis,<br />
+                    kukatpally housing board colony<br />
+                    Hyderabad, Telangana 500072<br />
+                    India
+                  </p>
+                  <p className="mb-6">
+                    <span className="font-medium">Phone:</span> +91 89394 44844<br />
+                    <span className="font-medium">Email:</span> info@gorantlainfotech.com
+                  </p>
+                  <Button className="bg-enterprise-teal hover:bg-enterprise-teal/90 text-white">
+                    <a href="https://www.google.com/maps/search/3rd+Floor+Sri+Durga+Sai+Hub,301,+13th+phase+rd,+opposite+prajay+megapolis,+kukatpally+housing+board+colony+Hyderabad+Telangana+500072+India" target="_blank" rel="noreferrer" className="flex items-center">
+                      View on Map
+                    </a>
+                  </Button>
                 </GlassCard>
               </div>
-              <div className="md:w-1/2 aspect-video bg-gray-100 rounded-lg flex items-center justify-center">
-                <div className="text-center p-6">
-                  <Globe className="h-12 w-12 text-enterprise-teal/50 mx-auto mb-4" />
-                  <p className="text-gray-500">Interactive map visualization would be displayed here</p>
-                </div>
+              <div className="md:w-1/2 aspect-video bg-gray-100 rounded-lg overflow-hidden h-64 md:h-auto">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3805.3822264961155!2d78.4086!3d17.4845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb91a09f0abc71%3A0xe0b0e79a3a134297!2sKukatpally%20Housing%20Board%20Colony%2C%20Kukatpally%2C%20Hyderabad%2C%20Telangana!5e0!3m2!1sen!2sin!4v1684773046613!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0 }} 
+                  allowFullScreen 
+                  loading="lazy" 
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
               </div>
             </div>
           </div>

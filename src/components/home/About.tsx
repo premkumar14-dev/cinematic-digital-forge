@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useInView } from "react-intersection-observer";
 import { CheckCircle, Users, Globe, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export function About() {
   const { ref, inView } = useInView({
@@ -12,10 +13,10 @@ export function About() {
   });
 
   const stats = [
-    { value: "250+", label: "Team Members" },
-    { value: "15+", label: "Years Experience" },
-    { value: "300+", label: "Projects Delivered" },
-    { value: "50+", label: "Global Clients" }
+    { value: "45+", label: "Team Members" },
+    { value: "5+", label: "Years Experience" },
+    { value: "23+", label: "Projects Delivered" },
+    { value: "12+", label: "Global Clients" }
   ];
 
   const achievements = [
@@ -45,17 +46,19 @@ export function About() {
           )}>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-enterprise-teal">About GORANTLA</h2>
             <p className="text-lg text-white/90 mb-6">
-              GORANTLA INFOTECH SOLUTIONS is a global technology company delivering cutting-edge software solutions, cloud engineering, and digital transformation services to enterprises worldwide.
+              GORANTLA INFOTECH SOLUTIONS PVT LTD is a global technology company delivering cutting-edge software solutions, cloud engineering, and digital transformation services to enterprises worldwide.
             </p>
             <p className="text-white/80 mb-6">
-              Founded in 2010, we've grown from a small team of passionate technologists to a global powerhouse of over 250 technology experts across three continents. Our mission is to empower businesses with innovative technology solutions that drive growth and competitive advantage.
+              Founded in 2018, we've grown from a small team of passionate technologists to a talented team of over 45 technology experts. Our mission is to empower businesses with innovative technology solutions that drive growth and competitive advantage.
             </p>
             <div className="mt-8">
-              <Button
-                className="bg-enterprise-teal hover:bg-enterprise-teal/90 text-white"
-              >
-                Learn More About Us
-              </Button>
+              <Link to="/about">
+                <Button
+                  className="bg-enterprise-teal hover:bg-enterprise-teal/90 text-white"
+                >
+                  Learn More About Us
+                </Button>
+              </Link>
             </div>
 
             {/* Achievements */}

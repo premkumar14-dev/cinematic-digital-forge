@@ -7,8 +7,31 @@ import AnimatedText from "@/components/ui/AnimatedText";
 import { GradientBackground } from "@/components/ui/GradientBackground";
 import { Link } from "react-router-dom";
 
+// Professional software company hero slides
+const heroSlides = [
+  {
+    id: 1,
+    bgImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    headline: "Transforming Ideas Into Digital Solutions",
+    subheadline: "Enterprise software development for the modern business landscape"
+  },
+  {
+    id: 2,
+    bgImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    headline: "Engineered For Excellence",
+    subheadline: "Building resilient technology infrastructures for global enterprises"
+  },
+  {
+    id: 3,
+    bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    headline: "We Challenge Our Progress",
+    subheadline: "Continuously evolving to meet tomorrow's technology challenges"
+  }
+];
+
 export function Hero() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -17,26 +40,36 @@ export function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <GradientBackground className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Modern, minimalist background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white to-blue-50/30 z-0">
-        {/* Subtle grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20"></div>
-        
-        {/* Subtle accent elements */}
-        <div className="absolute top-20 right-[10%] w-64 h-64 rounded-full bg-enterprise-teal/5 blur-3xl"></div>
-        <div className="absolute bottom-20 left-[5%] w-80 h-80 rounded-full bg-enterprise-blue/5 blur-3xl"></div>
-        <div className="absolute top-[40%] left-[35%] w-40 h-40 rounded-full bg-enterprise-blue/10 blur-2xl"></div>
-      </div>
-      
-      {/* Subtle floating shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-[10%] right-[20%] w-40 h-40 rounded-full border border-enterprise-teal/20 animate-float-slow"></div>
-        <div className="absolute top-[30%] left-[15%] w-28 h-28 rounded-full border border-enterprise-blue/20 animate-float-medium"></div>
-        <div className="absolute bottom-[20%] right-[25%] w-20 h-20 rounded-full border border-enterprise-purple/20 animate-float-fast"></div>
-      </div>
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setActiveSlide((prevSlide) => (prevSlide + 1) % heroSlides.length);
+    }, 5000);
+    
+    return () => clearInterval(slideInterval);
+  }, []);
 
+  const currentSlide = heroSlides[activeSlide];
+
+  return (
+    <div className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+      {/* Sliding background images with overlay */}
+      {heroSlides.map((slide, index) => (
+        <div 
+          key={slide.id}
+          className={cn(
+            "absolute inset-0 bg-cover bg-center transition-opacity duration-1000",
+            activeSlide === index ? "opacity-100" : "opacity-0"
+          )}
+          style={{ backgroundImage: `url(${slide.bgImage})` }}
+        />
+      ))}
+      
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-enterprise-blue/80 to-black/90"></div>
+      
+      {/* Subtle tech pattern overlay */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMjkuNzYgMEgzMHYxMC42M00wIDI5Ljc2djAuNDdoMTAuNjNNNjAgMjkuNzZ2MC40N0g0OS4zN00yOS43NiA2MEgzMFY0OS4zNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmMTAiLz48L3N2Zz4=')] opacity-10"></div>
+      
       <div className="enterprise-container relative z-10 py-20 mt-16">
         <div className="max-w-3xl mx-auto">
           {/* Main headline */}
@@ -46,24 +79,24 @@ export function Hero() {
               type="line"
               animation="fade"
               isVisible={isVisible}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-enterprise-blue mb-4"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4"
             />
             <AnimatedText
-              text="Delivering Global-Scale Innovation."
+              text={currentSlide.headline}
               type="line"
               animation="fade"
               delay={800}
               isVisible={isVisible}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-enterprise"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-enterprise-teal to-white"
             />
           </div>
 
           {/* Subheadline */}
           <AnimatedText 
-            text="At GORANTLA INFOTECH SOLUTIONS, we architect next-gen software ecosystems, accelerate cloud transformation, and build scalable digital infrastructures for global enterprises."
+            text="At GORANTLA INFOTECH SOLUTIONS PVT LTD, we architect next-gen software ecosystems, accelerate cloud transformation, and build scalable digital infrastructures for global enterprises."
             delay={1600}
             isVisible={isVisible}
-            className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto text-center"
+            className="text-lg text-gray-200 mb-12 max-w-2xl mx-auto text-center"
           />
 
           {/* Enhanced CTAs */}
@@ -85,26 +118,30 @@ export function Hero() {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="group relative hover:text-enterprise-teal border-enterprise-teal/30 hover:border-enterprise-teal px-8 py-6"
+                className="group relative border-white hover:bg-white/10 text-white hover:text-white px-8 py-6"
               >
-                <span className="relative z-10">Let's Talk</span>
+                <span className="relative z-10">Contact Us</span>
               </Button>
             </Link>
           </div>
 
-          {/* Enhanced scroll cue */}
-          <div className={cn(
-            "mt-20 flex flex-col items-center justify-center transition-all duration-500 delay-300",
-            isVisible ? "opacity-100" : "opacity-0"
-          )}>
-            <div className="w-8 h-14 rounded-full border-2 border-gray-400 flex items-start justify-center p-1">
-              <div className="w-2 h-3 bg-gray-400 rounded-full animate-[bounce_2s_infinite]" />
-            </div>
-            <p className="text-sm text-gray-400 mt-2 font-light tracking-wider">Scroll to explore</p>
+          {/* Slide indicators */}
+          <div className="flex justify-center mt-12 space-x-2">
+            {heroSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setActiveSlide(index)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-all duration-300",
+                  activeSlide === index ? "bg-white w-8" : "bg-white/50"
+                )}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
           </div>
         </div>
       </div>
-    </GradientBackground>
+    </div>
   );
 }
 

@@ -106,6 +106,21 @@ export function Header() {
   }, []);
 
   const renderNavLink = (item: typeof navItems[0]) => {
+    // Highlight Contact button differently
+    if (item.label === "Contact") {
+      return (
+        <Link
+          to={item.href}
+          className={cn(
+            "nav-link font-medium text-sm px-4 py-2 rounded-md transition-colors",
+            "bg-gradient-to-r from-enterprise-teal to-enterprise-blue text-white hover:shadow-md"
+          )}
+        >
+          {item.label}
+        </Link>
+      );
+    }
+
     return (
       <Link
         to={item.href}
@@ -123,6 +138,19 @@ export function Header() {
   };
 
   const renderMobileNavLink = (item: typeof navItems[0]) => {
+    // Highlight Contact button differently
+    if (item.label === "Contact") {
+      return (
+        <Link
+          to={item.href}
+          className="block py-3 px-4 mb-2 bg-gradient-to-r from-enterprise-teal to-enterprise-blue text-white rounded-md"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          {item.label}
+        </Link>
+      );
+    }
+
     return (
       <Link
         to={item.href}
@@ -142,34 +170,32 @@ export function Header() {
       )}
     >
       <div className="enterprise-container flex justify-between items-center">
-        {/* Enhanced Logo */}
+        {/* Updated Logo */}
         <Link to="/" className="flex items-center group">
-          {/* Logo Container */}
-          <div className="relative h-10 w-10 mr-3 flex-shrink-0">
-            {/* Base shape */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue to-enterprise-teal rounded-lg shadow-lg transform transition-transform duration-300 group-hover:scale-105"></div>
+          {/* Logo Container - Updated with more professional design */}
+          <div className="relative h-12 w-12 mr-3 flex-shrink-0">
+            {/* Outer ring */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-enterprise-blue via-enterprise-teal to-enterprise-blue animate-spin-slow"></div>
             
-            {/* Inner shape */}
-            <div className="absolute inset-1 bg-white rounded-[6px] flex items-center justify-center">
-              <div className="text-enterprise-blue font-bold text-lg tracking-tighter">G</div>
+            {/* Inner circle */}
+            <div className="absolute inset-[2px] bg-white rounded-full flex items-center justify-center">
+              {/* The "G" letter */}
+              <div className="text-enterprise-blue font-bold text-2xl">G</div>
             </div>
             
-            {/* Decorative dot */}
-            <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-enterprise-teal"></div>
-            
-            {/* Animated accent */}
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-enterprise-teal to-enterprise-blue transform origin-left transition-transform duration-300 group-hover:scale-x-100 scale-x-0"></div>
+            {/* Small decorative dot */}
+            <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal"></div>
           </div>
           
-          {/* Company Name */}
+          {/* Company Name - Updated */}
           <div>
             <div className="flex items-baseline">
               <span className="text-xl font-bold text-enterprise-blue tracking-tight">
-                GORANTLA INFOTECH
+                GORANTLA INFOTECH SOLUTIONS
               </span>
-              <span className="text-enterprise-teal animate-pulse-subtle ml-0.5">.</span>
+              <span className="text-enterprise-teal ml-0.5">.</span>
             </div>
-            <span className="text-xs block text-gray-600 -mt-1 font-medium tracking-wide">INNOVATIVE SOLUTIONS</span>
+            <span className="text-xs block text-gray-600 -mt-1 font-medium tracking-wide">PVT LTD</span>
           </div>
         </Link>
 
@@ -179,7 +205,7 @@ export function Header() {
             <div key={item.label} className="relative">
               {renderNavLink(item)}
               
-              {/* Enhanced Mega Menu */}
+              {/* Enhanced Mega Menu with better hover behavior */}
               {item.megaMenu && megaMenuOpen === item.label && (
                 <div 
                   className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 min-w-[280px] glass-effect rounded-xl shadow-xl overflow-hidden animate-fade-in border border-gray-100"
@@ -204,17 +230,6 @@ export function Header() {
             </div>
           ))}
         </nav>
-
-        {/* Enhanced CTA Button */}
-        <div className="hidden md:block">
-          <Link to="/contact">
-            <Button 
-              className="bg-gradient-to-r from-enterprise-teal to-enterprise-blue hover:from-enterprise-blue hover:to-enterprise-teal text-white transition-all duration-500 shadow-md hover:shadow-lg"
-            >
-              Let's Talk
-            </Button>
-          </Link>
-        </div>
 
         {/* Mobile menu button */}
         <button
@@ -248,15 +263,6 @@ export function Header() {
                 )}
               </div>
             ))}
-            <div className="mt-4 px-4">
-              <Link to="/contact">
-                <Button 
-                  className="w-full bg-gradient-to-r from-enterprise-teal to-enterprise-blue hover:from-enterprise-blue hover:to-enterprise-teal text-white"
-                >
-                  Let's Talk
-                </Button>
-              </Link>
-            </div>
           </div>
         </div>
       )}

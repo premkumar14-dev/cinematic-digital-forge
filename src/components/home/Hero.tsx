@@ -19,7 +19,7 @@ export function Hero() {
     return () => clearTimeout(timer);
   }, []);
   
-  // Background animation setup
+  // Enhanced 3D grid background animation setup
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -38,73 +38,90 @@ export function Hero() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
     
-    // Particles setup
-    const particles: { x: number; y: number; radius: number; color: string; vx: number; vy: number; originalX: number; originalY: number }[] = [];
-    const particleCount = 50;
-    const colors = ['rgba(0, 159, 170, 0.3)', 'rgba(63, 100, 215, 0.2)', 'rgba(97, 67, 133, 0.2)'];
+    // Create a more professional 3D grid effect
+    const gridPoints: { x: number; y: number; z: number; size: number; speed: number; color: string }[] = [];
+    const gridSize = Math.max(20, Math.floor(window.innerWidth / 100));
+    const colors = [
+      'rgba(0, 159, 170, 0.6)',
+      'rgba(63, 100, 215, 0.5)',
+      'rgba(97, 67, 133, 0.4)'
+    ];
     
-    // Create particles
-    for (let i = 0; i < particleCount; i++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
-      const radius = Math.random() * 2 + 1;
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const vx = (Math.random() - 0.5) * 0.5;
-      const vy = (Math.random() - 0.5) * 0.5;
-      
-      particles.push({
-        x,
-        y,
-        radius,
-        color,
-        vx,
-        vy,
-        originalX: x,
-        originalY: y
-      });
+    // Generate 3D grid
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        const x = (canvas.width / gridSize) * i;
+        const y = (canvas.height / gridSize) * j;
+        const z = Math.random() * 0.5 + 0.5; // Depth factor
+        const size = Math.random() * 2 + 1;
+        const speed = Math.random() * 0.001 + 0.0005;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        gridPoints.push({ x, y, z, size, speed, color });
+      }
     }
     
-    // Animation loop
+    // Animation variables
+    let time = 0;
+    
+    // Animation loop with 3D grid effect
     const animate = () => {
       if (!ctx || !canvas) return;
       
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas with a semi-transparent fill for trail effect
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       
-      // Update and draw particles
-      particles.forEach(particle => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+      time += 0.005;
+      
+      // Update and draw grid points
+      gridPoints.forEach((point, index) => {
+        // Calculate 3D wave effect
+        const waveX = Math.sin(time + index * 0.1) * 15;
+        const waveY = Math.cos(time + index * 0.1) * 15;
         
-        // Bounce off edges
-        if (particle.x < 0 || particle.x > canvas.width) {
-          particle.vx = -particle.vx;
-        }
+        // Calculate perspective scaling
+        const scale = point.z;
+        const size = point.size * scale;
         
-        if (particle.y < 0 || particle.y > canvas.height) {
-          particle.vy = -particle.vy;
-        }
-        
-        // Draw particle
+        // Draw point
         ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
+        ctx.arc(
+          point.x + waveX * scale,
+          point.y + waveY * scale,
+          size,
+          0,
+          Math.PI * 2
+        );
+        ctx.fillStyle = point.color;
         ctx.fill();
-      });
-      
-      // Draw connections
-      particles.forEach(particleA => {
-        particles.forEach(particleB => {
-          const dx = particleA.x - particleB.x;
-          const dy = particleA.y - particleB.y;
+        
+        // Update z (depth) for animation
+        point.z += point.speed;
+        
+        // Reset if too close or too far
+        if (point.z > 1.5 || point.z < 0.2) {
+          point.speed = -point.speed;
+        }
+        
+        // Draw connecting lines to nearby points
+        gridPoints.forEach((otherPoint) => {
+          const dx = (point.x + waveX * scale) - (otherPoint.x + Math.sin(time + index * 0.1) * 15 * otherPoint.z);
+          const dy = (point.y + waveY * scale) - (otherPoint.y + Math.cos(time + index * 0.1) * 15 * otherPoint.z);
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if (distance < 100) {
+          if (distance < canvas.width / gridSize * 1.5) {
             ctx.beginPath();
-            ctx.moveTo(particleA.x, particleA.y);
-            ctx.lineTo(particleB.x, particleB.y);
-            ctx.strokeStyle = `rgba(100, 100, 150, ${0.1 * (1 - distance / 100)})`;
-            ctx.lineWidth = 0.5;
+            ctx.moveTo(point.x + waveX * scale, point.y + waveY * scale);
+            ctx.lineTo(
+              otherPoint.x + Math.sin(time + index * 0.1) * 15 * otherPoint.z,
+              otherPoint.y + Math.cos(time + index * 0.1) * 15 * otherPoint.z
+            );
+            
+            // Line opacity based on distance and z-depth
+            const opacity = (1 - distance / (canvas.width / gridSize * 1.5)) * 0.15 * point.z * otherPoint.z;
+            ctx.strokeStyle = `rgba(100, 140, 200, ${opacity})`;
+            ctx.lineWidth = 0.5 * Math.min(point.z, otherPoint.z);
             ctx.stroke();
           }
         });
@@ -128,22 +145,24 @@ export function Hero() {
 
   return (
     <GradientBackground className="min-h-screen flex flex-col justify-center relative overflow-hidden">
-      {/* Background animation canvas */}
+      {/* Enhanced 3D grid background animation */}
       <canvas 
         ref={canvasRef} 
         className="absolute inset-0 w-full h-full z-0"
-        style={{ opacity: 0.7 }}
       />
 
-      {/* Decorative elements */}
+      {/* Floating geometric shapes */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-enterprise-teal/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/4 -left-20 w-60 h-60 bg-enterprise-purple/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-1/4 w-40 h-40 bg-enterprise-light-blue/10 rounded-full blur-3xl" />
+        <div className="absolute top-[10%] right-[20%] w-64 h-64 rounded-full bg-gradient-to-r from-enterprise-teal/20 to-enterprise-blue/10 backdrop-blur-3xl animate-float-slow" />
+        <div className="absolute top-[30%] left-[10%] w-80 h-80 rounded-full bg-gradient-to-tr from-enterprise-purple/15 to-transparent backdrop-blur-xl animate-float-medium" />
+        <div className="absolute bottom-[20%] right-[30%] w-40 h-40 rounded-full bg-gradient-to-bl from-enterprise-light-blue/20 to-transparent backdrop-blur-2xl animate-float-fast" />
       </div>
 
       <div className="enterprise-container relative z-10 py-20 mt-16">
-        <div className="max-w-3xl mx-auto text-center">
+        {/* Tech wireframe overlay */}
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1483058712412-4245e9b90334?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')] bg-cover bg-center opacity-5"></div>
+        
+        <div className="max-w-3xl mx-auto text-center backdrop-blur-sm p-8 rounded-xl bg-white/5">
           {/* Main headline */}
           <div className="mb-8">
             <AnimatedText
@@ -171,40 +190,42 @@ export function Hero() {
             className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto"
           />
 
-          {/* CTAs */}
+          {/* Enhanced CTAs */}
           <div className={cn(
             "flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 transform transition-all duration-500",
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           )}>
-            <Link to="/services">
+            <Link to="/services" className="group">
               <Button 
                 size="lg" 
-                className="group bg-enterprise-blue hover:bg-enterprise-blue/90 text-white"
+                className="group relative overflow-hidden bg-enterprise-blue hover:bg-enterprise-blue/90 text-white px-8 py-6"
               >
-                Explore Services
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <span className="relative z-10">Explore Services</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-enterprise-teal to-enterprise-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 relative z-10" />
               </Button>
             </Link>
             <Link to="/contact">
               <Button 
                 size="lg" 
                 variant="outline"
-                className="group hover:text-enterprise-teal border-enterprise-teal/30 hover:border-enterprise-teal"
+                className="group relative hover:text-enterprise-teal border-enterprise-teal/30 hover:border-enterprise-teal px-8 py-6 overflow-hidden"
               >
-                Let's Talk
+                <span className="relative z-10">Let's Talk</span>
+                <span className="absolute inset-0 bg-white/5 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"></span>
               </Button>
             </Link>
           </div>
 
-          {/* Scroll cue */}
+          {/* Enhanced scroll cue */}
           <div className={cn(
             "mt-20 flex flex-col items-center justify-center transition-all duration-500 delay-300",
             isVisible ? "opacity-100" : "opacity-0"
           )}>
-            <div className="w-6 h-10 rounded-full border-2 border-gray-400 flex items-start justify-center p-1">
-              <div className="w-1.5 h-2 bg-gray-400 rounded-full animate-[bounce_2s_infinite]" />
+            <div className="w-8 h-14 rounded-full border-2 border-gray-400 flex items-start justify-center p-1">
+              <div className="w-2 h-3 bg-gray-400 rounded-full animate-[bounce_2s_infinite]" />
             </div>
-            <p className="text-sm text-gray-400 mt-2">Scroll to explore</p>
+            <p className="text-sm text-gray-400 mt-2 font-light tracking-wider">Scroll to explore</p>
           </div>
         </div>
       </div>

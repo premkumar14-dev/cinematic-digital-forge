@@ -38,7 +38,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
-  const [megaMenuHover, setMegaMenuHover] = useState(false);
+  const [megaMenuTimeout, setMegaMenuTimeout] = useState<NodeJS.Timeout | null>(null);
 
   // Handle scroll
   useEffect(() => {
@@ -53,39 +53,45 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
+  // Handle menu mouse enter with delay clear
   const handleMenuMouseEnter = (label: string) => {
-    setMegaMenuOpen(label);
-    setMegaMenuHover(true);
-  };
-
-  const handleMenuMouseLeave = () => {
-    // Only close if not hovering over the submenu
-    if (!megaMenuHover) {
-      setMegaMenuOpen(null);
+    if (megaMenuTimeout) {
+      clearTimeout(megaMenuTimeout);
+      setMegaMenuTimeout(null);
     }
+    setMegaMenuOpen(label);
   };
 
-  const handleSubMenuMouseEnter = () => {
-    setMegaMenuHover(true);
+  // Handle menu mouse leave with delay
+  const handleMenuMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setMegaMenuOpen(null);
+    }, 100); // Small delay to prevent menu flickering
+    setMegaMenuTimeout(timeout);
   };
 
-  const handleSubMenuMouseLeave = () => {
-    setMegaMenuHover(false);
-    setMegaMenuOpen(null);
-  };
+  // Clear timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (megaMenuTimeout) {
+        clearTimeout(megaMenuTimeout);
+      }
+    };
+  }, [megaMenuTimeout]);
 
   const renderNavLink = (item: typeof navItems[0]) => {
     return (
       <Link
         to={item.href}
-        className="nav-link font-medium text-sm"
+        className="nav-link font-medium text-sm relative group"
         onMouseEnter={() => item.megaMenu && handleMenuMouseEnter(item.label)}
         onMouseLeave={handleMenuMouseLeave}
       >
         <span className="flex items-center">
           {item.label} 
-          {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4" />}
+          {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" />}
         </span>
+        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-enterprise-teal group-hover:w-full transition-all duration-300"></span>
       </Link>
     );
   };
@@ -110,40 +116,49 @@ export function Header() {
       )}
     >
       <div className="enterprise-container flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <div className="h-8 w-8 bg-enterprise-blue rounded-md flex items-center justify-center mr-2 text-white text-xs font-bold">
-            GIS
+        {/* Enhanced Logo */}
+        <Link to="/" className="flex items-center group">
+          <div className="relative h-10 w-10 bg-gradient-to-br from-enterprise-blue to-enterprise-teal rounded-lg flex items-center justify-center mr-3 overflow-hidden shadow-lg group-hover:shadow-enterprise-teal/30 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-r from-enterprise-blue to-enterprise-teal opacity-80 group-hover:opacity-100 transition-opacity"></div>
+            <div className="relative z-10 text-white font-bold text-lg">GI</div>
+            {/* Animated elements inside logo */}
+            <div className="absolute top-1 right-1 h-1 w-1 bg-white rounded-full opacity-70 animate-pulse"></div>
+            <div className="absolute bottom-2 left-2 h-1 w-1 bg-white rounded-full opacity-70 animate-[pulse_2.5s_infinite_0.5s]"></div>
+            <div className="absolute inset-0 border border-white/30 rounded-lg group-hover:border-white/50 transition-colors"></div>
           </div>
           <div>
-            <span className="text-xl font-bold text-enterprise-blue">
-              GORANTLA<span className="text-enterprise-teal animate-pulse-subtle">.</span>
-            </span>
-            <span className="text-sm block text-gray-600 -mt-1">INFOTECH</span>
+            <div className="flex items-baseline">
+              <span className="text-xl font-bold text-enterprise-blue tracking-tight">
+                GORANTLA
+              </span>
+              <span className="text-enterprise-teal animate-pulse-subtle ml-0.5">.</span>
+            </div>
+            <span className="text-sm block text-gray-600 -mt-1 font-medium tracking-wide">INFOTECH SOLUTIONS</span>
           </div>
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
+        <nav className="hidden md:flex items-center space-x-8">
           {navItems.map((item) => (
-            <div key={item.label} className="relative group">
+            <div key={item.label} className="relative">
               {renderNavLink(item)}
               
-              {/* Mega Menu */}
+              {/* Enhanced Mega Menu */}
               {item.megaMenu && megaMenuOpen === item.label && (
                 <div 
-                  className="absolute top-full left-0 mt-1 min-w-[240px] glass-effect rounded-md shadow-lg overflow-hidden animate-fade-in"
-                  onMouseEnter={handleSubMenuMouseEnter}
-                  onMouseLeave={handleSubMenuMouseLeave}
+                  className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 min-w-[280px] glass-effect rounded-xl shadow-xl overflow-hidden animate-fade-in border border-gray-100"
+                  onMouseEnter={() => handleMenuMouseEnter(item.label)}
+                  onMouseLeave={handleMenuMouseLeave}
                 >
-                  <div className="p-2">
+                  <div className="p-3">
                     {item.subItems?.map((subItem) => (
                       <Link
                         key={subItem.label}
                         to={subItem.href}
-                        className="block px-4 py-2 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded transition-colors"
+                        className="block px-5 py-3 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-lg transition-colors flex items-center group"
                         onClick={() => setMegaMenuOpen(null)}
                       >
+                        <span className="w-1.5 h-1.5 rounded-full bg-enterprise-blue/40 group-hover:bg-enterprise-teal mr-2 transition-colors"></span>
                         {subItem.label}
                       </Link>
                     ))}
@@ -154,11 +169,11 @@ export function Header() {
           ))}
         </nav>
 
-        {/* CTA Button */}
+        {/* Enhanced CTA Button */}
         <div className="hidden md:block">
           <Link to="/contact">
             <Button 
-              className="bg-enterprise-teal hover:bg-enterprise-teal/90 text-white"
+              className="bg-gradient-to-r from-enterprise-teal to-enterprise-blue hover:from-enterprise-blue hover:to-enterprise-teal text-white transition-all duration-500 shadow-md hover:shadow-lg"
             >
               Let's Talk
             </Button>
@@ -200,7 +215,7 @@ export function Header() {
             <div className="mt-4 px-4">
               <Link to="/contact">
                 <Button 
-                  className="w-full bg-enterprise-teal hover:bg-enterprise-teal/90 text-white"
+                  className="w-full bg-gradient-to-r from-enterprise-teal to-enterprise-blue hover:from-enterprise-blue hover:to-enterprise-teal text-white"
                 >
                   Let's Talk
                 </Button>

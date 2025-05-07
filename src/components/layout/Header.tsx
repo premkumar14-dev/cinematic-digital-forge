@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -112,8 +110,8 @@ export function Header() {
         <Link
           to={item.href}
           className={cn(
-            "nav-link font-medium text-sm px-4 py-2 rounded-md transition-colors",
-            "bg-gradient-to-r from-enterprise-teal to-enterprise-blue text-white hover:shadow-md"
+            "nav-link font-medium text-sm px-5 py-2.5 rounded-md transition-colors",
+            "bg-enterprise-teal text-white hover:bg-enterprise-teal/90 hover:shadow-md"
           )}
         >
           {item.label}
@@ -143,7 +141,7 @@ export function Header() {
       return (
         <Link
           to={item.href}
-          className="block py-3 px-4 mb-2 bg-gradient-to-r from-enterprise-teal to-enterprise-blue text-white rounded-md"
+          className="block py-3 px-4 mb-2 bg-enterprise-teal text-white rounded-md"
           onClick={() => setMobileMenuOpen(false)}
         >
           {item.label}
@@ -172,7 +170,7 @@ export function Header() {
       <div className="enterprise-container flex justify-between items-center">
         {/* Updated Logo */}
         <Link to="/" className="flex items-center group">
-          {/* Logo Container - Updated with more professional design */}
+          {/* Logo Container */}
           <div className="relative h-12 w-12 mr-3 flex-shrink-0">
             {/* Outer ring */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-enterprise-blue via-enterprise-teal to-enterprise-blue animate-spin-slow"></div>
@@ -187,15 +185,14 @@ export function Header() {
             <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal"></div>
           </div>
           
-          {/* Company Name - Updated */}
-          <div>
-            <div className="flex items-baseline">
-              <span className="text-xl font-bold text-enterprise-blue tracking-tight">
-                GORANTLA INFOTECH SOLUTIONS
-              </span>
-              <span className="text-enterprise-teal ml-0.5">.</span>
+          {/* Company Name - Two-line layout */}
+          <div className="flex flex-col">
+            <div className="text-lg font-bold text-enterprise-blue tracking-tight">
+              GORANTLA INFOTECH
             </div>
-            <span className="text-xs block text-gray-600 -mt-1 font-medium tracking-wide">PVT LTD</span>
+            <div className="text-xs text-gray-600 leading-none">
+              SOLUTIONS PVT LTD
+            </div>
           </div>
         </Link>
 

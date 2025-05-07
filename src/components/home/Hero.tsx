@@ -4,27 +4,26 @@ import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedText from "@/components/ui/AnimatedText";
-import { GradientBackground } from "@/components/ui/GradientBackground";
 import { Link } from "react-router-dom";
 
 // Professional software company hero slides
 const heroSlides = [
   {
     id: 1,
-    bgImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    bgImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Transforming Ideas Into Digital Solutions",
     subheadline: "Enterprise software development for the modern business landscape"
   },
   {
     id: 2,
-    bgImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    bgImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
     headline: "Engineered For Excellence",
     subheadline: "Building resilient technology infrastructures for global enterprises"
   },
   {
     id: 3,
-    bgImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    headline: "We Challenge Our Progress",
+    bgImage: "https://images.unsplash.com/photo-1581092921461-7384393132f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    headline: "Innovative Solutions That Scale",
     subheadline: "Continuously evolving to meet tomorrow's technology challenges"
   }
 ];
@@ -51,24 +50,21 @@ export function Hero() {
   const currentSlide = heroSlides[activeSlide];
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-center overflow-hidden">
+    <div className="relative min-h-[80vh] flex flex-col justify-center">
       {/* Sliding background images with overlay */}
       {heroSlides.map((slide, index) => (
         <div 
           key={slide.id}
           className={cn(
-            "absolute inset-0 bg-cover bg-center transition-opacity duration-1000",
+            "absolute inset-0 bg-cover bg-center transition-all duration-1000",
             activeSlide === index ? "opacity-100" : "opacity-0"
           )}
           style={{ backgroundImage: `url(${slide.bgImage})` }}
         />
       ))}
       
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-enterprise-blue/80 to-black/90"></div>
-      
-      {/* Subtle tech pattern overlay */}
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48cGF0aCBkPSJNMjkuNzYgMEgzMHYxMC42M00wIDI5Ljc2djAuNDdoMTAuNjNNNjAgMjkuNzZ2MC40N0g0OS4zN00yOS43NiA2MEgzMFY0OS4zNyIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZmZmZmMTAiLz48L3N2Zz4=')] opacity-10"></div>
+      {/* Semi-transparent overlay with modern gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-enterprise-blue/50 to-black/80 z-0"></div>
       
       <div className="enterprise-container relative z-10 py-20 mt-16">
         <div className="max-w-3xl mx-auto">
@@ -93,10 +89,10 @@ export function Hero() {
 
           {/* Subheadline */}
           <AnimatedText 
-            text="At GORANTLA INFOTECH SOLUTIONS PVT LTD, we architect next-gen software ecosystems, accelerate cloud transformation, and build scalable digital infrastructures for global enterprises."
+            text={currentSlide.subheadline}
             delay={1600}
             isVisible={isVisible}
-            className="text-lg text-gray-200 mb-12 max-w-2xl mx-auto text-center"
+            className="text-2xl text-gray-200 mb-12 max-w-2xl mx-auto text-center"
           />
 
           {/* Enhanced CTAs */}

@@ -8,59 +8,77 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/components/ui/use-toast";
+import { toast } from "sonner";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const contactFormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email address." }),
+  company: z.string().optional(),
+  phone: z.string().optional(),
+  inquiryType: z.string().min(1, { message: "Please select an inquiry type." }),
+  message: z.string().min(10, { message: "Message must be at least 10 characters." }),
+});
+
+type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    company: "",
-    phone: "",
-    inquiryType: "",
-    message: ""
-  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      company: "",
+      phone: "",
+      inquiryType: "",
+      message: "",
+    },
+  });
   
-  const handleSelectChange = (value: string) => {
-    setFormData(prev => ({ ...prev, inquiryType: value }));
-  };
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: ContactFormValues) => {
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormSubmitted(true);
-      toast({
-        title: "Message sent!",
-        description: "Thank you for contacting us. We'll get back to you shortly.",
-      });
+    try {
+      // When Supabase is connected, replace this with actual submission logic
+      console.log("Form data to submit:", data);
       
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        phone: "",
-        inquiryType: "",
-        message: ""
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Email would be sent to info@gorantlainfotech.com via Supabase function
+      
+      setFormSubmitted(true);
+      form.reset();
+      
+      toast.success("Message sent successfully!", {
+        description: "We'll get back to you shortly.",
       });
       
       // Reset form submitted state after 5 seconds
       setTimeout(() => {
         setFormSubmitted(false);
       }, 5000);
-    }, 1500);
+    } catch (error) {
+      toast.error("Failed to send message", {
+        description: "Please try again or contact us directly.",
+      });
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   
   return (
@@ -68,8 +86,7 @@ const Contact = () => {
       <Header />
       <main className="flex-grow pt-24">
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-enterprise-blue/10 to-enterprise-teal/10 z-0"></div>
+        <section className="relative py-20 overflow-hidden bg-gradient-to-r from-gray-50 to-gray-100">
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-30"></div>
           
           <div className="enterprise-container relative z-10">
@@ -81,28 +98,33 @@ const Contact = () => {
               </p>
               
               <div className="flex flex-col md:flex-row justify-center gap-8 mt-12">
-                <a href="tel:+918939444844" className="flex flex-col items-center p-6 rounded-lg bg-white/80 hover:bg-white transition-colors shadow-sm hover:shadow-md">
-                  <div className="w-12 h-12 rounded-full bg-enterprise-blue/10 flex items-center justify-center mb-4 text-enterprise-blue">
+                <a href="tel:+918939444844" className="flex flex-col items-center p-6 rounded-lg bg-white shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-enterprise-blue/10 flex items-center justify-center mb-4 text-enterprise-blue">
                     <Phone className="h-6 w-6" />
                   </div>
                   <p className="text-lg font-medium text-enterprise-blue">Call Us</p>
                   <p className="text-gray-600">+91 89394 44844</p>
                 </a>
                 
-                <a href="mailto:info@gorantlainfotech.com" className="flex flex-col items-center p-6 rounded-lg bg-white/80 hover:bg-white transition-colors shadow-sm hover:shadow-md">
-                  <div className="w-12 h-12 rounded-full bg-enterprise-teal/10 flex items-center justify-center mb-4 text-enterprise-teal">
+                <a href="mailto:info@gorantlainfotech.com" className="flex flex-col items-center p-6 rounded-lg bg-white shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-enterprise-teal/10 flex items-center justify-center mb-4 text-enterprise-teal">
                     <Mail className="h-6 w-6" />
                   </div>
                   <p className="text-lg font-medium text-enterprise-teal">Email Us</p>
                   <p className="text-gray-600">info@gorantlainfotech.com</p>
                 </a>
                 
-                <div className="flex flex-col items-center p-6 rounded-lg bg-white/80 hover:bg-white transition-colors shadow-sm hover:shadow-md">
-                  <div className="w-12 h-12 rounded-full bg-enterprise-purple/10 flex items-center justify-center mb-4 text-enterprise-purple">
+                <div className="flex flex-col items-center p-6 rounded-lg bg-white shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1">
+                  <div className="w-14 h-14 rounded-full bg-enterprise-purple/10 flex items-center justify-center mb-4 text-enterprise-purple">
                     <MapPin className="h-6 w-6" />
                   </div>
                   <p className="text-lg font-medium text-enterprise-purple">Visit Us</p>
-                  <p className="text-gray-600 text-center text-sm">Hyderabad, Telangana</p>
+                  <p className="text-gray-600 text-center text-sm">
+                    3rd Floor Sri Durga Sai Hub, 301,<br />
+                    13th phase rd, opposite prajay megapolis,<br />
+                    kukatpally housing board colony<br />
+                    Hyderabad, Telangana 500072
+                  </p>
                 </div>
               </div>
             </div>
@@ -126,7 +148,7 @@ const Contact = () => {
                     </p>
                   </div>
                   
-                  <GlassCard className="relative overflow-hidden border-0 shadow-lg">
+                  <GlassCard className="relative overflow-hidden border-0 shadow-xl">
                     {/* Decorative elements */}
                     <div className="absolute top-0 right-0 w-40 h-40 bg-enterprise-teal/5 rounded-full -translate-x-20 -translate-y-20"></div>
                     <div className="absolute bottom-0 left-0 w-40 h-40 bg-enterprise-blue/5 rounded-full translate-x-20 translate-y-20"></div>
@@ -149,104 +171,150 @@ const Contact = () => {
                         </Button>
                       </div>
                     ) : (
-                      <form onSubmit={handleSubmit} className="relative z-10">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                          <div className="space-y-2">
-                            <Label htmlFor="name" className="text-gray-700">Full Name</Label>
-                            <Input 
-                              id="name" 
-                              name="name" 
-                              value={formData.name}
-                              onChange={handleChange}
-                              placeholder="John Doe" 
-                              className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
-                              required 
+                      <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="relative z-10 space-y-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <FormField
+                              control={form.control}
+                              name="name"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Full Name</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      placeholder="John Doe" 
+                                      className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name="email"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Email Address</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      placeholder="john@example.com" 
+                                      className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name="company"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Company</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      placeholder="Your Company" 
+                                      className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name="phone"
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Phone Number</FormLabel>
+                                  <FormControl>
+                                    <Input 
+                                      placeholder="+91 98765 43210" 
+                                      className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name="inquiryType"
+                              render={({ field }) => (
+                                <FormItem className="md:col-span-2">
+                                  <FormLabel>Inquiry Type</FormLabel>
+                                  <Select 
+                                    onValueChange={field.onChange} 
+                                    defaultValue={field.value}
+                                  >
+                                    <FormControl>
+                                      <SelectTrigger className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30">
+                                        <SelectValue placeholder="Select an inquiry type" />
+                                      </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                      <SelectItem value="general">General Inquiry</SelectItem>
+                                      <SelectItem value="services">Services Information</SelectItem>
+                                      <SelectItem value="partnership">Partnership Opportunity</SelectItem>
+                                      <SelectItem value="careers">Careers</SelectItem>
+                                      <SelectItem value="support">Technical Support</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name="message"
+                              render={({ field }) => (
+                                <FormItem className="md:col-span-2">
+                                  <FormLabel>Message</FormLabel>
+                                  <FormControl>
+                                    <Textarea 
+                                      placeholder="How can we help you?" 
+                                      rows={5} 
+                                      className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
+                                      {...field} 
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
                             />
                           </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="email" className="text-gray-700">Email Address</Label>
-                            <Input 
-                              id="email" 
-                              name="email" 
-                              type="email" 
-                              value={formData.email}
-                              onChange={handleChange}
-                              placeholder="john@example.com" 
-                              className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
-                              required 
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="company" className="text-gray-700">Company</Label>
-                            <Input 
-                              id="company" 
-                              name="company" 
-                              value={formData.company}
-                              onChange={handleChange}
-                              placeholder="Your Company" 
-                              className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="phone" className="text-gray-700">Phone Number</Label>
-                            <Input 
-                              id="phone" 
-                              name="phone" 
-                              value={formData.phone}
-                              onChange={handleChange}
-                              placeholder="+91 98765 43210" 
-                              className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
-                            />
-                          </div>
-                          <div className="md:col-span-2 space-y-2">
-                            <Label htmlFor="inquiryType" className="text-gray-700">Inquiry Type</Label>
-                            <Select value={formData.inquiryType} onValueChange={handleSelectChange}>
-                              <SelectTrigger className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30">
-                                <SelectValue placeholder="Select an inquiry type" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="general">General Inquiry</SelectItem>
-                                <SelectItem value="services">Services Information</SelectItem>
-                                <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                                <SelectItem value="careers">Careers</SelectItem>
-                                <SelectItem value="support">Technical Support</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="md:col-span-2 space-y-2">
-                            <Label htmlFor="message" className="text-gray-700">Message</Label>
-                            <Textarea 
-                              id="message" 
-                              name="message" 
-                              value={formData.message}
-                              onChange={handleChange}
-                              placeholder="How can we help you?" 
-                              rows={5} 
-                              className="border-gray-300 focus:border-enterprise-teal focus:ring-enterprise-teal/30"
-                              required 
-                            />
-                          </div>
-                        </div>
-                        <Button 
-                          type="submit" 
-                          className="w-full bg-enterprise-blue hover:bg-enterprise-teal text-white transition-colors"
-                          disabled={isSubmitting}
-                        >
-                          {isSubmitting ? (
-                            <span className="flex items-center">
-                              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                              </svg>
-                              Sending...
-                            </span>
-                          ) : (
-                            <span className="flex items-center">
-                              <Send className="mr-2 h-4 w-4" /> Send Message
-                            </span>
-                          )}
-                        </Button>
-                      </form>
+                          
+                          <Button 
+                            type="submit" 
+                            className="w-full bg-enterprise-blue hover:bg-enterprise-teal text-white transition-colors"
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting ? (
+                              <span className="flex items-center">
+                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Sending...
+                              </span>
+                            ) : (
+                              <span className="flex items-center">
+                                <Send className="mr-2 h-4 w-4" /> Send Message
+                              </span>
+                            )}
+                          </Button>
+                        </form>
+                      </Form>
                     )}
                   </GlassCard>
                 </div>

@@ -67,34 +67,33 @@
 
 /* Fix for navigation menu viewport */
 [data-radix-menu-viewport] {
-  width: 100% !important;
   transform-origin: top center !important;
   overflow: visible !important;
   background-color: #fff !important;
   z-index: 100 !important;
 }
 
-/* Enhance buttons */
+/* Modern button styles */
 .btn-explore {
-  background: linear-gradient(135deg, var(--enterprise-blue), var(--enterprise-teal));
+  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
   color: white;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.2);
 }
 
 .btn-explore:hover {
-  background: linear-gradient(135deg, var(--enterprise-teal), var(--enterprise-blue));
+  background: linear-gradient(135deg, #00d2ff, #3a7bd5);
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.25);
+  box-shadow: 0 6px 16px rgba(0, 210, 255, 0.35);
 }
 
 .btn-contact {
   background: transparent;
   color: white;
-  border: 2px solid white;
+  border: 2px solid #00d2ff;
   padding: 1rem 2rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -102,15 +101,15 @@
 }
 
 .btn-contact:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(58, 123, 213, 0.1);
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.15);
 }
 
-/* Custom variables for theme */
+/* Custom variables for modern theme */
 :root {
-  --enterprise-blue: #0066cc;
-  --enterprise-teal: #00ccaa;
+  --enterprise-blue: #3a7bd5;
+  --enterprise-teal: #00d2ff;
   --enterprise-purple: #6b46c1;
 }
 
@@ -127,5 +126,28 @@
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Modern hover effects */
+.hover-gradient:hover {
+  background-size: 200% 200%;
+  background-position: right center;
+}
+
+/* Button pulse effect */
+.btn-pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 210, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
   }
 }

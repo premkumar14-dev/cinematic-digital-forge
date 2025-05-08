@@ -63,13 +63,13 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Enterprise theme colors
+				// Modern enterprise theme colors
 				enterprise: {
-					'blue': '#0A2342',
-					'teal': '#0F8B8D',
+					'blue': '#3a7bd5',
+					'teal': '#00d2ff',
 					'purple': '#5F4B8B',
 					'light-blue': '#2C7DA0',
-					'dark-blue': '#061A40',
+					'dark-blue': '#1A2A56',
 				}
 			},
 			borderRadius: {
@@ -117,7 +117,7 @@ export default {
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'gradient-enterprise': 'linear-gradient(to right, #0A2342, #0F8B8D)',
+				'gradient-enterprise': 'linear-gradient(to right, #3a7bd5, #00d2ff)',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'sans-serif'],

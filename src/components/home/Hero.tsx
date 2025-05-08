@@ -10,19 +10,19 @@ import { Link } from "react-router-dom";
 const heroSlides = [
   {
     id: 1,
-    bgImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Enterprise Technology That Scales",
     subheadline: "Building resilient solutions for tomorrow's challenges"
   },
   {
     id: 2,
-    bgImage: "https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Innovation Through Experience",
     subheadline: "Our expertise, your competitive advantage"
   },
   {
     id: 3,
-    bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Beyond Software Development",
     subheadline: "End-to-end solutions that transform businesses"
   }
@@ -64,7 +64,7 @@ export function Hero() {
       ))}
       
       {/* Improved overlay with better text visibility */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60 backdrop-blur-[2px] z-0"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60 backdrop-blur-[2px] z-0"></div>
       
       <div className="enterprise-container relative z-10 py-24 mt-16">
         <div className="max-w-4xl mx-auto">
@@ -110,7 +110,7 @@ export function Hero() {
             />
           </div>
 
-          {/* Premium redesigned CTAs */}
+          {/* Redesigned premium CTAs with modern styling */}
           <div className={cn(
             "flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 transform transition-all duration-500",
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
@@ -118,7 +118,7 @@ export function Hero() {
             <Link to="/services" className="group w-full sm:w-auto">
               <Button 
                 size="lg" 
-                className="group relative overflow-hidden bg-gradient-to-br from-enterprise-blue to-enterprise-teal hover:from-enterprise-teal hover:to-enterprise-blue text-white px-8 py-7 rounded-md shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
+                className="group relative overflow-hidden bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] hover:from-[#00d2ff] hover:to-[#3a7bd5] text-white px-8 py-7 rounded-md shadow-lg hover:shadow-xl transition-all w-full sm:w-auto border-none"
               >
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-all duration-700"></div>
                 <span className="relative z-10 font-medium tracking-wide text-lg">Explore Solutions</span>
@@ -130,9 +130,9 @@ export function Hero() {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="group relative bg-white/10 border-2 border-white hover:bg-white/20 text-white hover:text-white px-8 py-[1.65rem] rounded-md transition-all hover:shadow-lg w-full sm:w-auto"
+                className="group relative bg-white/10 border-2 border-[#00d2ff] hover:border-white text-white hover:text-white px-8 py-[1.65rem] rounded-md transition-all hover:shadow-lg w-full sm:w-auto"
               >
-                <div className="absolute inset-0 w-full h-full bg-enterprise-teal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 w-full h-full bg-[#3a7bd5]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <span className="relative z-10 font-medium tracking-wide text-lg">Get in Touch</span>
               </Button>
             </Link>

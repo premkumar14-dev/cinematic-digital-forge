@@ -1,9 +1,16 @@
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
+import { 
+  NavigationMenu, 
+  NavigationMenuContent, 
+  NavigationMenuItem, 
+  NavigationMenuLink, 
+  NavigationMenuList, 
+  NavigationMenuTrigger 
+} from "@/components/ui/navigation-menu";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -39,9 +46,6 @@ const navItems = [
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [megaMenuOpen, setMegaMenuOpen] = useState<string | null>(null);
-  const menuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const menuOpenRef = useRef<boolean>(false);
 
   // Handle scroll
   useEffect(() => {
@@ -56,86 +60,54 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [scrolled]);
 
-  const clearMenuTimeout = () => {
-    if (menuTimeoutRef.current) {
-      clearTimeout(menuTimeoutRef.current);
-      menuTimeoutRef.current = null;
-    }
-  };
-
-  const handleMenuMouseEnter = (label: string) => {
-    clearMenuTimeout();
-    menuOpenRef.current = true;
-    setMegaMenuOpen(label);
-  };
-
-  const handleMenuMouseLeave = () => {
-    menuOpenRef.current = false;
-    
-    menuTimeoutRef.current = setTimeout(() => {
-      if (!menuOpenRef.current) {
-        setMegaMenuOpen(null);
-      }
-    }, 300);
-  };
-
-  const handleSubmenuMouseEnter = () => {
-    clearMenuTimeout();
-    menuOpenRef.current = true;
-  };
-
-  const handleSubmenuMouseLeave = () => {
-    menuOpenRef.current = false;
-    menuTimeoutRef.current = setTimeout(() => {
-      if (!menuOpenRef.current) {
-        setMegaMenuOpen(null);
-      }
-    }, 300);
-  };
-
-  useEffect(() => {
-    return () => {
-      clearMenuTimeout();
-    };
-  }, []);
-
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
-        "bg-white/95 py-3 shadow-md backdrop-blur-md"
+        scrolled ? "bg-white/95 py-2 shadow-md backdrop-blur-md" : "bg-gradient-to-r from-black/60 to-black/40 backdrop-blur-md py-3"
       )}
     >
       <div className="enterprise-container flex justify-between items-center">
         <Link to="/" className="flex items-center group">
-          <div className="relative h-14 w-14 mr-4 flex-shrink-0 overflow-hidden rounded-xl">
-            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue via-blue-500 to-enterprise-teal rounded-xl shadow-lg"></div>
-            
-            <div className="absolute inset-[3px] bg-white rounded-lg flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="h-10 w-10">
-                <path 
-                  d="M32 8C19.2 8 8.8 18.4 8.8 31.2c0 10.4 6.8 19.2 16 22.4.8.8 1.6 2.4.8 3.2-1.6 1.6-4 1.6-5.6 1.6 2.4 1.6 5.6 2.4 8.8 2.4 10.4 0 19.2-6.4 23.2-15.2 1.6-3.2 2.4-6.4 2.4-10.4 0-4-1.6-8-3.2-11.2-3.2-8.8-11.2-16-19.2-16z"
-                  fill="url(#grad)" 
+          {/* Modern, sleek logo design */}
+          <div className="relative h-10 w-10 mr-3 flex-shrink-0 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#3a7bd5] to-[#00d2ff] rounded-md shadow-lg"></div>
+            <div className="absolute inset-[2px] bg-white rounded-md flex items-center justify-center">
+              <svg viewBox="0 0 36 36" className="h-7 w-7">
+                <path
+                  d="M7,14 C7,9.58172 10.5817,6 15,6 L21,6 C25.4183,6 29,9.58172 29,14 L29,22 C29,26.4183 25.4183,30 21,30 L15,30 C10.5817,30 7,26.4183 7,22 L7,14 Z"
+                  fill="url(#logo-gradient)"
+                  stroke="none"
                 />
-                <text x="22" y="40" fontSize="28" fontFamily="Arial" fontWeight="bold" fill="#fff">G</text>
-                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#0066cc" />
-                  <stop offset="100%" stopColor="#00ccaa" />
-                </linearGradient>
+                <text x="18" y="22" fontSize="14" fontWeight="bold" fill="white" textAnchor="middle" dominantBaseline="middle">G</text>
+                <defs>
+                  <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#3a7bd5" />
+                    <stop offset="100%" stopColor="#00d2ff" />
+                  </linearGradient>
+                </defs>
               </svg>
             </div>
-            
-            <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal animate-pulse-subtle"></div>
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-enterprise-blue to-enterprise-teal"></div>
           </div>
           
-          <div className="font-sans tracking-tight">
-            <div className="text-2xl font-bold bg-gradient-to-r from-enterprise-blue to-enterprise-teal bg-clip-text text-transparent">
-              GORANTLA INFOTECH
+          {/* Modern company name typography */}
+          <div className="font-sans">
+            <div className={cn(
+              "text-xl font-bold tracking-tight transition-colors",
+              scrolled ? "bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] bg-clip-text text-transparent" : "text-white"
+            )}>
+              GORANTLA
+            </div>
+            <div className={cn(
+              "text-xs font-medium tracking-widest -mt-1",
+              scrolled ? "text-gray-600" : "text-gray-300"
+            )}>
+              INFOTECH
             </div>
           </div>
         </Link>
 
+        {/* Modern navigation with improved dropdowns */}
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex space-x-1">
             {navItems.map((item) => (
@@ -143,7 +115,8 @@ export function Header() {
                 {item.megaMenu ? (
                   <NavigationMenuTrigger 
                     className={cn(
-                      "bg-transparent text-enterprise-blue hover:bg-enterprise-blue/5 data-[state=open]:bg-enterprise-blue/5 px-4"
+                      "bg-transparent hover:bg-white/10 data-[state=open]:bg-white/10 px-4",
+                      scrolled ? "text-gray-800" : "text-white"
                     )}
                   >
                     {item.label}
@@ -152,25 +125,27 @@ export function Header() {
                   <Link to={item.href} className={cn(
                     "flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-colors relative group",
                     item.label === "Contact" 
-                      ? "bg-enterprise-teal text-white hover:bg-enterprise-teal/90 hover:shadow-md" 
-                      : "text-enterprise-blue hover:bg-enterprise-blue/5"
+                      ? "bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white hover:shadow-md" 
+                      : scrolled ? "text-gray-800 hover:bg-gray-100" : "text-white hover:bg-white/10"
                   )}>
                     {item.label}
                     {item.label !== "Contact" && (
-                      <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-enterprise-teal group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300"></span>
+                      <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-[#00d2ff] group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300"></span>
                     )}
                   </Link>
                 )}
 
                 {item.megaMenu && (
-                  <NavigationMenuContent className="bg-white shadow-xl border border-gray-100 p-4 rounded-xl w-[400px] z-50">
+                  <NavigationMenuContent 
+                    className="bg-white shadow-xl border border-gray-100 p-4 rounded-xl w-[450px] z-50 absolute left-auto right-0 transform-none"
+                  >
                     <ul className="grid grid-cols-2 gap-3">
                       {item.subItems?.map((subItem) => (
-                        <li key={subItem.label}>
+                        <li key={subItem.label} className="w-full">
                           <NavigationMenuLink asChild>
                             <Link
                               to={subItem.href}
-                              className="block p-3 hover:bg-enterprise-teal/10 rounded-md text-enterprise-blue hover:text-enterprise-teal transition-colors"
+                              className="block p-3 w-full hover:bg-gradient-to-r hover:from-[#3a7bd5]/5 hover:to-[#00d2ff]/5 rounded-md text-gray-700 hover:text-[#3a7bd5] transition-colors"
                             >
                               <span className="text-sm font-medium">{subItem.label}</span>
                             </Link>
@@ -186,7 +161,10 @@ export function Header() {
         </NavigationMenu>
 
         <button
-          className="md:hidden text-enterprise-blue rounded-full p-2 hover:bg-enterprise-blue/5"
+          className={cn(
+            "md:hidden rounded-full p-2 transition-colors",
+            scrolled ? "text-gray-800 hover:bg-gray-100" : "text-white hover:bg-white/10"
+          )}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -201,7 +179,7 @@ export function Header() {
                 {item.label === "Contact" ? (
                   <Link
                     to={item.href}
-                    className="block py-3 px-4 mb-2 bg-enterprise-teal text-white rounded-md text-center font-medium"
+                    className="block py-3 px-4 mb-2 bg-gradient-to-r from-[#3a7bd5] to-[#00d2ff] text-white rounded-md text-center font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -209,7 +187,7 @@ export function Header() {
                 ) : (
                   <Link
                     to={item.href}
-                    className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-md transition-colors"
+                    className="block py-3 px-4 hover:bg-gradient-to-r hover:from-[#3a7bd5]/5 hover:to-[#00d2ff]/5 hover:text-[#3a7bd5] rounded-md transition-colors"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.label}
@@ -217,12 +195,12 @@ export function Header() {
                 )}
                 
                 {item.megaMenu && (
-                  <div className="pl-6 border-l-2 border-enterprise-teal/20 ml-4 mt-2 mb-3 grid grid-cols-2 gap-1">
+                  <div className="pl-6 border-l-2 border-[#00d2ff]/20 ml-4 mt-2 mb-3 grid grid-cols-2 gap-1">
                     {item.subItems?.map((subItem) => (
                       <Link
                         key={subItem.label}
                         to={subItem.href}
-                        className="block py-2 px-3 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-md"
+                        className="block py-2 px-3 text-sm hover:bg-gradient-to-r hover:from-[#3a7bd5]/5 hover:to-[#00d2ff]/5 hover:text-[#3a7bd5] rounded-md"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {subItem.label}

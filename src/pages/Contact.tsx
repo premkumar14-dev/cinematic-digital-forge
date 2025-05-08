@@ -7,7 +7,6 @@ import { Mail, Phone, MapPin, Send, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import {
   Select,
@@ -20,6 +19,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { supabase } from "@/integrations/supabase/client";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
@@ -52,14 +52,44 @@ const Contact = () => {
     setIsSubmitting(true);
     
     try {
-      // When Supabase is connected, replace this with actual submission logic
-      console.log("Form data to submit:", data);
+      // 1. Save to Supabase
+      const { error: supabaseError } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: data.name,
+          email: data.email,
+          company: data.company || null,
+          phone: data.phone || null,
+          inquiry_type: data.inquiryType,
+          message: data.message
+        });
+        
+      if (supabaseError) {
+        throw new Error(`Database error: ${supabaseError.message}`);
+      }
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // 2. Send email notification
+      const response = await fetch('https://phlcktaeiuqwqhfmtszx.supabase.co/functions/v1/send-contact-notification', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          company: data.company,
+          phone: data.phone,
+          inquiryType: data.inquiryType,
+          message: data.message
+        }),
+      });
       
-      // Email would be sent to info@gorantlainfotech.com via Supabase function
+      if (!response.ok) {
+        const responseData = await response.json();
+        throw new Error(`Email notification error: ${responseData.error || 'Unknown error'}`);
+      }
       
+      // Reset form and show success
       setFormSubmitted(true);
       form.reset();
       

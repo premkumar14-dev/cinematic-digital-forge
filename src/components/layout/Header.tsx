@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -98,46 +99,43 @@ export function Header() {
     };
   }, []);
 
-  
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
-        scrolled 
-          ? "bg-white/95 py-3 shadow-md backdrop-blur-md"
-          : "bg-gradient-to-b from-black/50 to-transparent py-4"
+        "bg-white/95 py-3 shadow-md backdrop-blur-md"
       )}
     >
-      
       <div className="enterprise-container flex justify-between items-center">
-        
         <Link to="/" className="flex items-center group">
-          
-          <div className="relative h-12 w-12 mr-4 flex-shrink-0 overflow-hidden rounded-xl">
+          <div className="relative h-14 w-14 mr-4 flex-shrink-0 overflow-hidden rounded-xl">
+            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue via-blue-500 to-enterprise-teal rounded-xl shadow-lg"></div>
             
-            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue to-enterprise-teal rounded-xl"></div>
-            
-            
-            <div className="absolute inset-[3px] bg-white/95 rounded-lg flex items-center justify-center">
-              <div className="text-enterprise-blue font-bold text-2xl tracking-wider">G</div>
+            <div className="absolute inset-[3px] bg-white rounded-lg flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" className="h-10 w-10">
+                <path 
+                  d="M32 8C19.2 8 8.8 18.4 8.8 31.2c0 10.4 6.8 19.2 16 22.4.8.8 1.6 2.4.8 3.2-1.6 1.6-4 1.6-5.6 1.6 2.4 1.6 5.6 2.4 8.8 2.4 10.4 0 19.2-6.4 23.2-15.2 1.6-3.2 2.4-6.4 2.4-10.4 0-4-1.6-8-3.2-11.2-3.2-8.8-11.2-16-19.2-16z"
+                  fill="url(#grad)" 
+                />
+                <text x="22" y="40" fontSize="28" fontFamily="Arial" fontWeight="bold" fill="#fff">G</text>
+                <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#0066cc" />
+                  <stop offset="100%" stopColor="#00ccaa" />
+                </linearGradient>
+              </svg>
             </div>
             
-            
             <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal animate-pulse-subtle"></div>
-            
-            
-            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-enterprise-teal to-enterprise-blue"></div>
+            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-enterprise-blue to-enterprise-teal"></div>
           </div>
           
-          
           <div className="font-sans tracking-tight">
-            <div className="text-xl font-bold bg-gradient-to-r from-enterprise-blue to-enterprise-teal bg-clip-text text-transparent">
+            <div className="text-2xl font-bold bg-gradient-to-r from-enterprise-blue to-enterprise-teal bg-clip-text text-transparent">
               GORANTLA INFOTECH
             </div>
           </div>
         </Link>
 
-        
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex space-x-1">
             {navItems.map((item) => (
@@ -145,8 +143,7 @@ export function Header() {
                 {item.megaMenu ? (
                   <NavigationMenuTrigger 
                     className={cn(
-                      "bg-transparent text-white hover:bg-white/10 data-[state=open]:bg-white/10 px-4",
-                      scrolled && "text-enterprise-blue hover:bg-enterprise-blue/5 data-[state=open]:bg-enterprise-blue/5"
+                      "bg-transparent text-enterprise-blue hover:bg-enterprise-blue/5 data-[state=open]:bg-enterprise-blue/5 px-4"
                     )}
                   >
                     {item.label}
@@ -156,9 +153,7 @@ export function Header() {
                     "flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-colors relative group",
                     item.label === "Contact" 
                       ? "bg-enterprise-teal text-white hover:bg-enterprise-teal/90 hover:shadow-md" 
-                      : scrolled
-                        ? "text-enterprise-blue hover:bg-enterprise-blue/5"
-                        : "text-white hover:bg-white/10"
+                      : "text-enterprise-blue hover:bg-enterprise-blue/5"
                   )}>
                     {item.label}
                     {item.label !== "Contact" && (
@@ -168,7 +163,7 @@ export function Header() {
                 )}
 
                 {item.megaMenu && (
-                  <NavigationMenuContent className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-xl border border-gray-100 w-[400px]">
+                  <NavigationMenuContent className="bg-white shadow-xl border border-gray-100 p-4 rounded-xl w-[400px] z-50">
                     <ul className="grid grid-cols-2 gap-3">
                       {item.subItems?.map((subItem) => (
                         <li key={subItem.label}>
@@ -190,7 +185,6 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        
         <button
           className="md:hidden text-enterprise-blue rounded-full p-2 hover:bg-enterprise-blue/5"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -199,7 +193,6 @@ export function Header() {
         </button>
       </div>
 
-      
       {mobileMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 w-full animate-fade-in shadow-lg border-t border-gray-100">
           <div className="py-4 enterprise-container">

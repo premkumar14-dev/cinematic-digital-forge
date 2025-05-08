@@ -54,3 +54,78 @@
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
 }
+
+/* Enhance dropdowns */
+[data-radix-popper-content-wrapper] {
+  z-index: 100 !important;
+}
+
+.radix-navigation-menu {
+  z-index: 50 !important;
+  position: relative;
+}
+
+/* Fix for navigation menu viewport */
+[data-radix-menu-viewport] {
+  width: 100% !important;
+  transform-origin: top center !important;
+  overflow: visible !important;
+  background-color: #fff !important;
+  z-index: 100 !important;
+}
+
+/* Enhance buttons */
+.btn-explore {
+  background: linear-gradient(135deg, var(--enterprise-blue), var(--enterprise-teal));
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+}
+
+.btn-explore:hover {
+  background: linear-gradient(135deg, var(--enterprise-teal), var(--enterprise-blue));
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 102, 204, 0.25);
+}
+
+.btn-contact {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-contact:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+/* Custom variables for theme */
+:root {
+  --enterprise-blue: #0066cc;
+  --enterprise-teal: #00ccaa;
+  --enterprise-purple: #6b46c1;
+}
+
+/* Enhanced animation for dropdown menus */
+.slide-in-from-top {
+  animation: slideInTop 0.3s ease forwards;
+}
+
+@keyframes slideInTop {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

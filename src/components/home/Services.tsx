@@ -148,13 +148,14 @@ export function Services() {
           ))}
         </div>
         
-        {/* View all services button */}
+        {/* Redesigned View all services button */}
         <div className="flex justify-center mt-12">
           <Link to="/services">
-            <Button className="group relative overflow-hidden bg-white text-enterprise-blue border border-enterprise-blue/30 hover:border-enterprise-blue transition-all duration-300 px-8">
+            <Button className="bg-gradient-to-r from-enterprise-blue to-enterprise-teal hover:from-enterprise-teal hover:to-enterprise-blue text-white transition-all duration-300 px-8 py-6 text-lg font-medium shadow-md hover:shadow-lg transform hover:-translate-y-1">
               <span className="relative z-10">View All Services</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-enterprise-teal to-enterprise-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-enterprise-teal transform scale-x-0 origin-left group-hover:scale-x-100 transition-transform duration-300"></span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2">
+                <path d="m9 18 6-6-6-6"/>
+              </svg>
             </Button>
           </Link>
         </div>

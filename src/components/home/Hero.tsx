@@ -6,23 +6,23 @@ import { Button } from "@/components/ui/button";
 import AnimatedText from "@/components/ui/AnimatedText";
 import { Link } from "react-router-dom";
 
-// Premium high-quality hero slides
+// Premium high-quality hero slides with better visibility and clarity
 const heroSlides = [
   {
     id: 1,
-    bgImage: "https://images.unsplash.com/photo-1638612913771-8f00622b96fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Enterprise Technology That Scales",
     subheadline: "Building resilient solutions for tomorrow's challenges"
   },
   {
     id: 2,
-    bgImage: "https://images.unsplash.com/photo-1664575600850-c4b712e6e2bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1560264280-88b68371db39?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Innovation Through Experience",
     subheadline: "Our expertise, your competitive advantage"
   },
   {
     id: 3,
-    bgImage: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    bgImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     headline: "Beyond Software Development",
     subheadline: "End-to-end solutions that transform businesses"
   }
@@ -63,8 +63,8 @@ export function Hero() {
         />
       ))}
       
-      {/* Premium overlay with modern glass effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70 backdrop-blur-[3px] z-0"></div>
+      {/* Improved overlay with better text visibility */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60 backdrop-blur-[2px] z-0"></div>
       
       <div className="enterprise-container relative z-10 py-24 mt-16">
         <div className="max-w-4xl mx-auto">
@@ -72,10 +72,10 @@ export function Hero() {
           <div className="mb-12 text-center">
             {/* Animated company name */}
             <div className={cn(
-              "inline-block mb-6 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 transform transition-all duration-1000",
+              "inline-block mb-6 px-6 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 transform transition-all duration-1000",
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
             )}>
-              <span className="text-enterprise-teal font-medium">GORANTLA INFOTECH</span>
+              <span className="text-white font-medium tracking-wide">GORANTLA INFOTECH</span>
             </div>
             
             {/* Main headline with premium styling */}
@@ -84,7 +84,7 @@ export function Hero() {
               type="line"
               animation="fade"
               isVisible={isVisible}
-              className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 tracking-tight"
+              className="text-5xl sm:text-6xl md:text-7xl font-bold text-white mb-6 tracking-tight drop-shadow-lg"
             />
             
             <AnimatedText
@@ -93,7 +93,7 @@ export function Hero() {
               animation="fade"
               delay={800}
               isVisible={isVisible}
-              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-enterprise-teal to-white"
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-enterprise-teal to-white drop-shadow-md"
             />
           </div>
 
@@ -106,47 +106,49 @@ export function Hero() {
               text={currentSlide.subheadline}
               delay={1600}
               isVisible={isVisible}
-              className="text-2xl text-gray-100 mb-12 mx-auto text-center font-light"
+              className="text-2xl text-white mb-12 mx-auto text-center font-light drop-shadow-md"
             />
           </div>
 
-          {/* Premium CTAs */}
+          {/* Premium redesigned CTAs */}
           <div className={cn(
             "flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6 transform transition-all duration-500",
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           )}>
-            <Link to="/services" className="group">
+            <Link to="/services" className="group w-full sm:w-auto">
               <Button 
                 size="lg" 
-                className="group relative overflow-hidden bg-gradient-to-r from-enterprise-teal to-enterprise-blue text-white px-8 py-7 rounded-md shadow-lg hover:shadow-xl transition-all"
+                className="group relative overflow-hidden bg-gradient-to-br from-enterprise-blue to-enterprise-teal hover:from-enterprise-teal hover:to-enterprise-blue text-white px-8 py-7 rounded-md shadow-lg hover:shadow-xl transition-all w-full sm:w-auto"
               >
-                <span className="relative z-10 font-medium tracking-wide">Explore Solutions</span>
-                <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1 relative z-10" />
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-[200%] group-hover:translate-x-[200%] transition-all duration-700"></div>
+                <span className="relative z-10 font-medium tracking-wide text-lg">Explore Solutions</span>
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2 relative z-10" />
               </Button>
             </Link>
-            <Link to="/contact">
+            
+            <Link to="/contact" className="group w-full sm:w-auto">
               <Button 
                 size="lg" 
                 variant="outline"
-                className="group relative border-2 border-white/80 bg-transparent hover:bg-white/10 text-white hover:text-white px-8 py-[1.625rem] rounded-md transition-all hover:shadow-lg"
+                className="group relative bg-white/10 border-2 border-white hover:bg-white/20 text-white hover:text-white px-8 py-[1.65rem] rounded-md transition-all hover:shadow-lg w-full sm:w-auto"
               >
-                <span className="relative z-10 font-medium tracking-wide">Get in Touch</span>
+                <div className="absolute inset-0 w-full h-full bg-enterprise-teal/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span className="relative z-10 font-medium tracking-wide text-lg">Get in Touch</span>
               </Button>
             </Link>
           </div>
 
           {/* Premium slide indicators */}
-          <div className="flex justify-center mt-16 space-x-2">
+          <div className="flex justify-center mt-16 space-x-3">
             {heroSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setActiveSlide(index)}
                 className={cn(
-                  "h-2 rounded-full transition-all duration-500",
+                  "h-2.5 rounded-full transition-all duration-500 shadow-md",
                   activeSlide === index 
-                    ? "bg-enterprise-teal w-16" 
-                    : "bg-white/30 w-6 hover:bg-white/50"
+                    ? "bg-white w-16" 
+                    : "bg-white/50 w-8 hover:bg-white/70"
                 )}
                 aria-label={`Go to slide ${index + 1}`}
               />
@@ -154,9 +156,9 @@ export function Hero() {
           </div>
           
           {/* Subtle scroll indicator for premium UX */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/70 animate-bounce">
-            <span className="text-xs mb-2">Scroll to explore</span>
-            <div className="h-10 w-0.5 bg-white/30 rounded-full"></div>
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/90 animate-bounce">
+            <span className="text-xs mb-2 font-semibold tracking-wider">Scroll to explore</span>
+            <div className="h-12 w-0.5 bg-white/50 rounded-full"></div>
           </div>
         </div>
       </div>

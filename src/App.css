@@ -70,47 +70,95 @@
   transform-origin: top center !important;
   overflow: visible !important;
   background-color: #fff !important;
-  z-index: 100 !important;
+  z-index: 999 !important; /* Increased z-index to prevent overlapping issues */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(240, 240, 240, 0.6) !important;
 }
 
 /* Modern button styles */
 .btn-explore {
-  background: linear-gradient(135deg, #3a7bd5, #00d2ff);
+  background: linear-gradient(135deg, #4A5AEF, #8C52FF);
   color: white;
   padding: 1rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.2);
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(138, 82, 255, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-explore::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #8C52FF, #4A5AEF);
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .btn-explore:hover {
-  background: linear-gradient(135deg, #00d2ff, #3a7bd5);
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 210, 255, 0.35);
+  box-shadow: 0 8px 20px rgba(138, 82, 255, 0.5);
+}
+
+.btn-explore:hover::before {
+  opacity: 1;
+}
+
+.btn-explore span {
+  position: relative;
+  z-index: 2;
 }
 
 .btn-contact {
   background: transparent;
   color: white;
-  border: 2px solid #00d2ff;
+  border: 2px solid #8C52FF;
   padding: 1rem 2rem;
-  border-radius: 0.5rem;
+  border-radius: 8px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-contact::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #4A5AEF, #8C52FF);
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
 .btn-contact:hover {
-  background: rgba(58, 123, 213, 0.1);
   transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0, 210, 255, 0.15);
+  box-shadow: 0 4px 15px rgba(138, 82, 255, 0.3);
+  border-color: transparent;
+}
+
+.btn-contact:hover::before {
+  opacity: 1;
+}
+
+.btn-contact span {
+  position: relative;
+  z-index: 2;
 }
 
 /* Custom variables for modern theme */
 :root {
-  --enterprise-blue: #3a7bd5;
-  --enterprise-teal: #00d2ff;
-  --enterprise-purple: #6b46c1;
+  --enterprise-blue: #4A5AEF;
+  --enterprise-teal: #41B3A3;
+  --enterprise-purple: #8C52FF;
 }
 
 /* Enhanced animation for dropdown menus */
@@ -142,12 +190,61 @@
 
 @keyframes pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.5);
+    box-shadow: 0 0 0 0 rgba(138, 82, 255, 0.5);
   }
   70% {
-    box-shadow: 0 0 0 10px rgba(0, 210, 255, 0);
+    box-shadow: 0 0 0 10px rgba(138, 82, 255, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
+    box-shadow: 0 0 0 0 rgba(138, 82, 255, 0);
   }
+}
+
+/* Modern card hover effect */
+.modern-card {
+  transition: all 0.4s ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Modern navbar styles */
+.modern-navbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(240, 240, 240, 0.6);
+}
+
+/* Animated gradient text */
+.gradient-text {
+  background: linear-gradient(90deg, #4A5AEF, #8C52FF);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 4s linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* Fix navigation menu positioning */
+.navigation-menu-dropdown {
+  position: absolute !important;
+  top: 100% !important;
+  left: 0 !important;
+  width: auto !important;
+  min-width: 220px !important;
+  transform: none !important;
 }

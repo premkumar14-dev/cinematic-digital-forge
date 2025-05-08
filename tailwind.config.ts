@@ -63,13 +63,16 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Modern enterprise theme colors
+				// Modern enterprise theme colors - updated with more modern colors
 				enterprise: {
-					'blue': '#3a7bd5',
-					'teal': '#00d2ff',
-					'purple': '#5F4B8B',
-					'light-blue': '#2C7DA0',
-					'dark-blue': '#1A2A56',
+					'blue': '#4A5AEF',         // Modern indigo blue
+					'teal': '#41B3A3',         // Soft modern teal
+					'purple': '#8C52FF',       // Modern purple
+					'light-blue': '#56CCF2',   // Lighter accent blue
+					'dark-blue': '#2F3676',    // Deep indigo
+					'dark-purple': '#5C3FC5',  // Deep purple
+					'gradient-start': '#4A5AEF', // For gradients
+					'gradient-end': '#8C52FF',   // For gradients
 				}
 			},
 			borderRadius: {
@@ -79,12 +82,12 @@ export default {
 			},
 			keyframes: {
 				"accordion-down": {
-					from: { height: "0" },
-					to: { height: "var(--radix-accordion-content-height)" },
+					from: { height: "0", opacity: "0" },
+					to: { height: "var(--radix-accordion-content-height)", opacity: "1" },
 				},
 				"accordion-up": {
-					from: { height: "var(--radix-accordion-content-height)" },
-					to: { height: "0" },
+					from: { height: "var(--radix-accordion-content-height)", opacity: "1" },
+					to: { height: "0", opacity: "0" },
 				},
 				"fade-in": {
 					"0%": { opacity: "0", transform: "translateY(10px)" },
@@ -106,6 +109,16 @@ export default {
 					"0%, 100%": { transform: "scale(1)" },
 					"50%": { transform: "scale(1.05)" },
 				},
+				"gradient-flow": {
+					"0%": { backgroundPosition: "0% 50%" },
+					"50%": { backgroundPosition: "100% 50%" },
+					"100%": { backgroundPosition: "0% 50%" },
+				},
+				"border-glow": {
+					"0%": { boxShadow: "0 0 0 0 rgba(138, 82, 255, 0.4)" },
+					"50%": { boxShadow: "0 0 0 4px rgba(138, 82, 255, 0.4)" },
+					"100%": { boxShadow: "0 0 0 0 rgba(138, 82, 255, 0.4)" },
+				}
 			},
 			animation: {
 				"accordion-down": "accordion-down 0.2s ease-out",
@@ -114,10 +127,15 @@ export default {
 				"scale-in": "scale-in 0.4s ease-out",
 				"slide-in-right": "slide-in-right 0.3s ease-out",
 				"pulse-subtle": "pulse-subtle 4s ease-in-out infinite",
+				"gradient-flow": "gradient-flow 6s ease infinite",
+				"border-glow": "border-glow 2s ease-in-out infinite",
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-				'gradient-enterprise': 'linear-gradient(to right, #3a7bd5, #00d2ff)',
+				'gradient-enterprise': 'linear-gradient(to right, #4A5AEF, #8C52FF)',
+				'gradient-modern': 'linear-gradient(135deg, #4A5AEF 0%, #8C52FF 100%)',
+				'gradient-button': 'linear-gradient(135deg, #4A5AEF 0%, #8C52FF 80%)',
+				'gradient-dark': 'linear-gradient(135deg, #2F3676 0%, #5C3FC5 100%)',
 			},
 			fontFamily: {
 				'sans': ['Inter', 'sans-serif'],

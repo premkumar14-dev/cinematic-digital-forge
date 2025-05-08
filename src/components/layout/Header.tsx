@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -99,6 +98,7 @@ export function Header() {
     };
   }, []);
 
+  
   return (
     <header
       className={cn(
@@ -108,27 +108,28 @@ export function Header() {
           : "bg-gradient-to-b from-black/50 to-transparent py-4"
       )}
     >
+      
       <div className="enterprise-container flex justify-between items-center">
-        {/* Modern Premium Logo */}
+        
         <Link to="/" className="flex items-center group">
-          {/* Logo Container - Modernized */}
+          
           <div className="relative h-12 w-12 mr-4 flex-shrink-0 overflow-hidden rounded-xl">
-            {/* Gradient background */}
+            
             <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue to-enterprise-teal rounded-xl"></div>
             
-            {/* Logo inner shape */}
+            
             <div className="absolute inset-[3px] bg-white/95 rounded-lg flex items-center justify-center">
               <div className="text-enterprise-blue font-bold text-2xl tracking-wider">G</div>
             </div>
             
-            {/* Animated accent element */}
+            
             <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal animate-pulse-subtle"></div>
             
-            {/* Bottom accent line */}
+            
             <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-enterprise-teal to-enterprise-blue"></div>
           </div>
           
-          {/* Company Name - Premium Style */}
+          
           <div className="font-sans tracking-tight">
             <div className="text-xl font-bold bg-gradient-to-r from-enterprise-blue to-enterprise-teal bg-clip-text text-transparent">
               GORANTLA INFOTECH
@@ -136,7 +137,7 @@ export function Header() {
           </div>
         </Link>
 
-        {/* Modern Desktop Navigation */}
+        
         <NavigationMenu className="hidden md:flex">
           <NavigationMenuList className="flex space-x-1">
             {navItems.map((item) => (
@@ -189,7 +190,7 @@ export function Header() {
           </NavigationMenuList>
         </NavigationMenu>
 
-        {/* Mobile menu button */}
+        
         <button
           className="md:hidden text-enterprise-blue rounded-full p-2 hover:bg-enterprise-blue/5"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -198,7 +199,7 @@ export function Header() {
         </button>
       </div>
 
-      {/* Mobile Navigation - More premium look */}
+      
       {mobileMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 w-full animate-fade-in shadow-lg border-t border-gray-100">
           <div className="py-4 enterprise-container">

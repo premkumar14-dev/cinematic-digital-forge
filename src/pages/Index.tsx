@@ -10,7 +10,7 @@ import Technologies from "@/components/home/Technologies";
 
 const Index = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-white">
       <Header />
       <main className="flex-grow">
         <Hero />

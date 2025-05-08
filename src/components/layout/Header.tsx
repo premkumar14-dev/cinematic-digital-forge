@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ChevronDown, Menu, X } from "lucide-react";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "@/components/ui/navigation-menu";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -61,18 +63,15 @@ export function Header() {
     }
   };
 
-  // Handle menu mouse enter
   const handleMenuMouseEnter = (label: string) => {
     clearMenuTimeout();
     menuOpenRef.current = true;
     setMegaMenuOpen(label);
   };
 
-  // Handle menu mouse leave with delay
   const handleMenuMouseLeave = () => {
     menuOpenRef.current = false;
     
-    // Add a small delay to allow moving to submenu
     menuTimeoutRef.current = setTimeout(() => {
       if (!menuOpenRef.current) {
         setMegaMenuOpen(null);
@@ -80,13 +79,11 @@ export function Header() {
     }, 300);
   };
 
-  // Handle submenu mouse enter
   const handleSubmenuMouseEnter = () => {
     clearMenuTimeout();
     menuOpenRef.current = true;
   };
 
-  // Handle submenu mouse leave
   const handleSubmenuMouseLeave = () => {
     menuOpenRef.current = false;
     menuTimeoutRef.current = setTimeout(() => {
@@ -96,161 +93,142 @@ export function Header() {
     }, 300);
   };
 
-  // Clear timeout on unmount
   useEffect(() => {
     return () => {
       clearMenuTimeout();
     };
   }, []);
 
-  const renderNavLink = (item: typeof navItems[0]) => {
-    // Highlight Contact button differently
-    if (item.label === "Contact") {
-      return (
-        <Link
-          to={item.href}
-          className={cn(
-            "nav-link font-medium text-sm px-5 py-2.5 rounded-md transition-colors",
-            "bg-enterprise-teal text-white hover:bg-enterprise-teal/90 hover:shadow-md"
-          )}
-        >
-          {item.label}
-        </Link>
-      );
-    }
-
-    return (
-      <Link
-        to={item.href}
-        className="nav-link font-medium text-sm relative group"
-        onMouseEnter={() => item.megaMenu && handleMenuMouseEnter(item.label)}
-        onMouseLeave={handleMenuMouseLeave}
-      >
-        <span className="flex items-center">
-          {item.label} 
-          {item.megaMenu && <ChevronDown className="ml-1 h-4 w-4 transition-transform group-hover:rotate-180" />}
-        </span>
-        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-enterprise-teal group-hover:w-full transition-all duration-300"></span>
-      </Link>
-    );
-  };
-
-  const renderMobileNavLink = (item: typeof navItems[0]) => {
-    // Highlight Contact button differently
-    if (item.label === "Contact") {
-      return (
-        <Link
-          to={item.href}
-          className="block py-3 px-4 mb-2 bg-enterprise-teal text-white rounded-md"
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          {item.label}
-        </Link>
-      );
-    }
-
-    return (
-      <Link
-        to={item.href}
-        className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal"
-        onClick={() => setMobileMenuOpen(false)}
-      >
-        {item.label}
-      </Link>
-    );
-  };
-
   return (
     <header
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
-        scrolled ? "glass-effect py-3" : "bg-transparent py-5"
+        scrolled 
+          ? "bg-white/95 py-3 shadow-md backdrop-blur-md"
+          : "bg-gradient-to-b from-black/50 to-transparent py-4"
       )}
     >
       <div className="enterprise-container flex justify-between items-center">
-        {/* Updated Logo */}
+        {/* Modern Premium Logo */}
         <Link to="/" className="flex items-center group">
-          {/* Logo Container */}
-          <div className="relative h-12 w-12 mr-3 flex-shrink-0">
-            {/* Outer ring */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-enterprise-blue via-enterprise-teal to-enterprise-blue animate-spin-slow"></div>
+          {/* Logo Container - Modernized */}
+          <div className="relative h-12 w-12 mr-4 flex-shrink-0 overflow-hidden rounded-xl">
+            {/* Gradient background */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-enterprise-blue to-enterprise-teal rounded-xl"></div>
             
-            {/* Inner circle */}
-            <div className="absolute inset-[2px] bg-white rounded-full flex items-center justify-center">
-              {/* The "G" letter */}
-              <div className="text-enterprise-blue font-bold text-2xl">G</div>
+            {/* Logo inner shape */}
+            <div className="absolute inset-[3px] bg-white/95 rounded-lg flex items-center justify-center">
+              <div className="text-enterprise-blue font-bold text-2xl tracking-wider">G</div>
             </div>
             
-            {/* Small decorative dot */}
-            <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal"></div>
+            {/* Animated accent element */}
+            <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-enterprise-teal animate-pulse-subtle"></div>
+            
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-enterprise-teal to-enterprise-blue"></div>
           </div>
           
-          {/* Company Name - Two-line layout */}
-          <div className="flex flex-col">
-            <div className="text-lg font-bold text-enterprise-blue tracking-tight">
+          {/* Company Name - Premium Style */}
+          <div className="font-sans tracking-tight">
+            <div className="text-xl font-bold bg-gradient-to-r from-enterprise-blue to-enterprise-teal bg-clip-text text-transparent">
               GORANTLA INFOTECH
-            </div>
-            <div className="text-xs text-gray-600 leading-none">
-              SOLUTIONS PVT LTD
             </div>
           </div>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <div key={item.label} className="relative">
-              {renderNavLink(item)}
-              
-              {/* Enhanced Mega Menu with better hover behavior */}
-              {item.megaMenu && megaMenuOpen === item.label && (
-                <div 
-                  className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 min-w-[280px] glass-effect rounded-xl shadow-xl overflow-hidden animate-fade-in border border-gray-100"
-                  onMouseEnter={handleSubmenuMouseEnter}
-                  onMouseLeave={handleSubmenuMouseLeave}
-                >
-                  <div className="p-3">
-                    {item.subItems?.map((subItem) => (
-                      <Link
-                        key={subItem.label}
-                        to={subItem.href}
-                        className="block px-5 py-3 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-lg transition-colors flex items-center group"
-                        onClick={() => setMegaMenuOpen(null)}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-enterprise-blue/40 group-hover:bg-enterprise-teal mr-2 transition-colors"></span>
-                        {subItem.label}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </nav>
+        {/* Modern Desktop Navigation */}
+        <NavigationMenu className="hidden md:flex">
+          <NavigationMenuList className="flex space-x-1">
+            {navItems.map((item) => (
+              <NavigationMenuItem key={item.label}>
+                {item.megaMenu ? (
+                  <NavigationMenuTrigger 
+                    className={cn(
+                      "bg-transparent text-white hover:bg-white/10 data-[state=open]:bg-white/10 px-4",
+                      scrolled && "text-enterprise-blue hover:bg-enterprise-blue/5 data-[state=open]:bg-enterprise-blue/5"
+                    )}
+                  >
+                    {item.label}
+                  </NavigationMenuTrigger>
+                ) : (
+                  <Link to={item.href} className={cn(
+                    "flex items-center justify-center px-4 py-2 text-sm font-medium rounded-md transition-colors relative group",
+                    item.label === "Contact" 
+                      ? "bg-enterprise-teal text-white hover:bg-enterprise-teal/90 hover:shadow-md" 
+                      : scrolled
+                        ? "text-enterprise-blue hover:bg-enterprise-blue/5"
+                        : "text-white hover:bg-white/10"
+                  )}>
+                    {item.label}
+                    {item.label !== "Contact" && (
+                      <span className="absolute -bottom-0.5 left-1/2 w-0 h-0.5 bg-enterprise-teal group-hover:w-1/2 group-hover:left-1/4 transition-all duration-300"></span>
+                    )}
+                  </Link>
+                )}
+
+                {item.megaMenu && (
+                  <NavigationMenuContent className="bg-white/95 backdrop-blur-md p-4 rounded-xl shadow-xl border border-gray-100 w-[400px]">
+                    <ul className="grid grid-cols-2 gap-3">
+                      {item.subItems?.map((subItem) => (
+                        <li key={subItem.label}>
+                          <NavigationMenuLink asChild>
+                            <Link
+                              to={subItem.href}
+                              className="block p-3 hover:bg-enterprise-teal/10 rounded-md text-enterprise-blue hover:text-enterprise-teal transition-colors"
+                            >
+                              <span className="text-sm font-medium">{subItem.label}</span>
+                            </Link>
+                          </NavigationMenuLink>
+                        </li>
+                      ))}
+                    </ul>
+                  </NavigationMenuContent>
+                )}
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuList>
+        </NavigationMenu>
 
         {/* Mobile menu button */}
         <button
-          className="md:hidden text-enterprise-blue"
+          className="md:hidden text-enterprise-blue rounded-full p-2 hover:bg-enterprise-blue/5"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation - More premium look */}
       {mobileMenuOpen && (
-        <div className="md:hidden glass-effect absolute top-full left-0 w-full animate-fade-in">
+        <div className="md:hidden bg-white/95 backdrop-blur-lg absolute top-full left-0 w-full animate-fade-in shadow-lg border-t border-gray-100">
           <div className="py-4 enterprise-container">
             {navItems.map((item) => (
-              <div key={item.label}>
-                {renderMobileNavLink(item)}
+              <div key={item.label} className="mb-2">
+                {item.label === "Contact" ? (
+                  <Link
+                    to={item.href}
+                    className="block py-3 px-4 mb-2 bg-enterprise-teal text-white rounded-md text-center font-medium"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <Link
+                    to={item.href}
+                    className="block py-3 px-4 hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-md transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )}
+                
                 {item.megaMenu && (
-                  <div className="pl-6 border-l-2 border-enterprise-teal/20 ml-4 mt-1 mb-3">
+                  <div className="pl-6 border-l-2 border-enterprise-teal/20 ml-4 mt-2 mb-3 grid grid-cols-2 gap-1">
                     {item.subItems?.map((subItem) => (
                       <Link
                         key={subItem.label}
                         to={subItem.href}
-                        className="block py-2 px-3 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded"
+                        className="block py-2 px-3 text-sm hover:bg-enterprise-teal/10 hover:text-enterprise-teal rounded-md"
                         onClick={() => setMobileMenuOpen(false)}
                       >
                         {subItem.label}
